@@ -1,34 +1,64 @@
 <template>
 	<view>
-		<!-- 02. 轮播区 -->
-		<view v-if="swiperDatas && swiperDatas.length > 0" class="swiper-area margin-lr-sm border-radius pos-r">
-			<!-- 轮播组件 -->
-			<swiper class="swiper w-full" :autoplay="autoplay" indicator-dots indicator-color="#f7f7f7" indicator-active-color="#ff6a6c"
-				previous-margin="30px" next-margin="30px" circular
-				:current="swiperIdx" @change="swiperChange">
-				<swiper-item v-for="(item, idx) in swiperDatas" :key="idx" class="swiper-item wh-full box-sizing-b">
-					<view class="wh-full animated-all" :style="{ 'transform': `scale(${swiperIdx == idx ? 1 : 0.93})` }" @click.stop="topage(item)">
-						<image class="border-radius wh-full" mode="aspectFill" lazy-load :src="item.img" />
-					</view>
-				</swiper-item>
-			</swiper>
+		<!-- 头部轮播图 -->
+		<banner :list="carousel"></banner>
+		<!-- 分类 -->
+		<view class="cate-section">
+			<view class="item" v-for="item in navList" :key="item._id" @click="navTo(item.link)">
+				<image class="icon" :src="item.image"></image>
+				<text>{{ item.name }}</text>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import banner from './components/banner.vue'
 	export default {
+		components: {
+			banner
+		},
 		data() {
 			return {
-				
+				navList: [{
+						name: "a"
+					},
+					{
+						name: "b"
+					}
+				], //导航列表
 			}
 		},
 		methods: {
-			
+
 		}
 	}
 </script>
 
-<style>
+<style scoped lang="scss">
+	/* 分类 */
+	.cate-section {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		padding: 10rpx 16rpx;
+		background: #fff;
 
+		.item {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 20%;
+			padding: 20rpx 0;
+			font-size: 24rpx;
+			color: #333;
+		}
+
+		.icon {
+			width: 84rpx;
+			height: 84rpx;
+			margin-bottom: 14rpx;
+			border-radius: 50%;
+		}
+	}
 </style>
