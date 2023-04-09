@@ -30,7 +30,16 @@
 			"navigationBarTitleText": "",
 			"enablePullDownRefresh": false
 		}
-	}],
+	}    ,{
+            "path" : "pages/tabBar/forum/forum",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
@@ -50,6 +59,12 @@
 				"iconPath": "static/cx-images/home.png",
 				"selectedIconPath": "static/cx-images/home-fill.png",
 				"text": "首页"
+			},
+			{
+				"pagePath": "pages/tabBar/forum/forum",
+				"iconPath": "static/cx-images/forum.png",
+				"selectedIconPath": "static/cx-images/forum-fill.png",
+				"text": "心声"
 			},
 			{
 				"pagePath": "pages/tabBar/mine/mine",
