@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4004757 */
+  src: url('/static/cx-icons/iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.cx-order-fill:before {
+  content: "\e833";
+}
+
+.cx-vote-yea:before {
+  content: "\ebcf";
+}
+
+.cx-toupiao:before {
+  content: "\e61a";
+}
+
+.cx-icon-time:before {
+  content: "\e607";
+}
+

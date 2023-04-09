@@ -112,7 +112,7 @@
 				this.anonymous = e.detail.value;
 			},
 			commitVote() {
-				let voteData = {
+				let voteContent = {
 					title: this.voteTitle,
 					desc: '',
 					options: this.options,
@@ -122,7 +122,8 @@
 					anonymous: this.anonymous
 				}
 
-				console.log('gzx: ' + JSON.stringify(voteData))
+				uni.$emit('commit', voteContent);
+				uni.navigateBack();
 			}
 		}
 	}
