@@ -21,16 +21,25 @@
 		data() {
 			return {
 				navList: [{
-						name: "a"
-					},
-					{
-						name: "b"
+						name: '投票决策',
+						link: '/pages/vote/vote'
 					}
 				], //导航列表
+				carousel: [], // 轮播图表
 			}
 		},
 		methods: {
-
+			/**
+			 * navigatorTo跳转页面
+			 * @param {String} url
+			 * @param {Object} options
+			 * @param {Boolean} options.login 是否检测登录  
+			 */
+			navTo(url, options = {}) {
+				uni.navigateTo({
+					url: url
+				})
+			}
 		}
 	}
 </script>
