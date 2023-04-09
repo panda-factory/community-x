@@ -21,7 +21,7 @@
 	}, {
 		"path": "pages/vote/vote",
 		"style": {
-			"navigationBarTitleText": "vote",
+			"navigationBarTitleText": "投票",
 			"enablePullDownRefresh": false
 		}
 	}, {

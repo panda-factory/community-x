@@ -26,6 +26,7 @@
 		</view>
 
 		<view class="cx-vote-wrapper">
+			<!-- 截止日期 -->
 			<view class="cx-vote-setting-item">
 				<view class="cx-vote-setting-cell cx-vote-div">
 					<text>截止日期</text>
