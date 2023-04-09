@@ -4,7 +4,7 @@
 		<banner :list="carousel"></banner>
 		<!-- 分类 -->
 		<view class="cate-section">
-			<view class="item" v-for="item in navList" :key="item._id" @click="navTo(item.link)">
+			<view class="item" v-for="item in navList" @click="navTo(item.link)">
 				<image class="icon" :src="item.image"></image>
 				<text>{{ item.name }}</text>
 			</view>
@@ -22,7 +22,8 @@
 			return {
 				navList: [{
 						name: '投票决策',
-						link: '/pages/vote/vote'
+						link: '/pages/vote/vote',
+                        image: '/static/cx-images/vote.png'
 					}
 				], //导航列表
 				carousel: [], // 轮播图表
@@ -36,6 +37,7 @@
 			 * @param {Boolean} options.login 是否检测登录  
 			 */
 			navTo(url, options = {}) {
+                console.log('gzx navTo: ' + url)
 				uni.navigateTo({
 					url: url
 				})
@@ -67,7 +69,6 @@
 			width: 84rpx;
 			height: 84rpx;
 			margin-bottom: 14rpx;
-			border-radius: 50%;
 		}
 	}
 </style>

@@ -1,5 +1,6 @@
 <template>
 	<view class="vote-item">
+			<uni-icons custom-prefix="iconfont" type="cx-icon-ticket" size="24px" color="#007aff"></uni-icons>
 		<text class="info-title">{{voteContent.title}}</text>
 		<view class="vote-info flex-row" style="flex-direction: row;">
 			<uni-icons type="staff-filled" color="#007aff"></uni-icons>

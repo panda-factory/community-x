@@ -49,12 +49,14 @@
     "quickapp" : {},
     /* 快应用特有相关 */
     "mp-weixin" : {
-        /* 小程序特有相关 */
-        "appid" : "",
+        "appid" : "wx54a787e1704772d3",
         "setting" : {
             "urlCheck" : false
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "secureNetwork" : {
+            "enable" : true
+        }
     },
     "vueVersion" : "2"
 }

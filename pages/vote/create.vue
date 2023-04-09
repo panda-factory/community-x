@@ -30,11 +30,11 @@
 			<view class="cx-vote-setting-item">
 				<view class="cx-vote-setting-cell cx-vote-div">
 					<text>截止日期</text>
-					<picker mode="date" :value="date" :start="startDate" :end="endDate" @change="bindDateChange">
-						<view>{{date}}</view>
+					<picker mode="date" :value="endDate" @change="bindDateChange">
+						<view>{{endDate}}</view>
 					</picker>
 
-					<picker mode="time" :value="time" start="09:01" end="21:01" @change="bindTimeChange">
+					<picker mode="time" :value="time" @change="bindTimeChange">
 						<view class="uni-input">{{time}}</view>
 					</picker>
 				</view>
@@ -63,14 +63,11 @@
 		let day = date.getDate();
 
 		if (type === 'end') {
-			month = month + 5;
+			day = day + 7;
 		} else if (type == 'time') {
-			let time = date.toLocaleString('en-US', {
-				hour12: false,
-				hour: '2-digit',
-				minute: '2-digit'
-			}); // 格式化时间
-			return time
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+			return `${hours}:${minutes}`;
 		}
 		month = month > 9 ? month : '0' + month;;
 		day = day > 9 ? day : '0' + day;
@@ -84,7 +81,6 @@
 				date: getDate({
 					format: true
 				}),
-				startDate: getDate(),
 				endDate: getDate('end'),
 				time: getDate('time'),
 				options: ['', ''],
@@ -92,6 +88,12 @@
 			}
 		},
 		methods: {
+			bindDateChange: function(e) {
+				this.endDate = e.detail.value
+			},
+			bindTimeChange: function(e) {
+				this.time = e.detail.value
+			},
 			onTitleInput: function(event) {
 				this.voteTitle = event.detail.value;
 			},
@@ -117,7 +119,7 @@
 					title: this.voteTitle,
 					desc: '',
 					options: this.options,
-					startDate: this.startDate,
+					startDate: this.date,
 					endDate: this.endDate,
 					time: this.time,
 					anonymous: this.anonymous

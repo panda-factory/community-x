@@ -11,16 +11,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.cx-order-fill:before {
-  content: "\e833";
+.cx-icon-ticket:before {
+  content: "\e822";
 }
 
-.cx-vote-yea:before {
+.cx-icon-vote:before {
   content: "\ebcf";
-}
-
-.cx-toupiao:before {
-  content: "\e61a";
 }
 
 .cx-icon-time:before {

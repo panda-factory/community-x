@@ -15,7 +15,6 @@
 					:class="{current: current === index}"
 					:src="item.image" 
 					mode="aspectFill"
-					@click="navTo(item.link)"
 				></image>
 			</swiper-item>
 		</swiper>

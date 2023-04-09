@@ -21,7 +21,7 @@
 	}, {
 		"path": "pages/vote/vote",
 		"style": {
-			"navigationBarTitleText": "投票",
+			"navigationBarTitleText": "投票列表",
 			"enablePullDownRefresh": false
 		}
 	}, {
@@ -47,14 +47,14 @@
 		"backgroundColor": "#F8F8F8",
 		"list": [{
 				"pagePath": "pages/tabBar/home/home",
-				"iconPath": "static/icons/home.png",
-				"selectedIconPath": "static/icons/home_.png",
+				"iconPath": "static/cx-images/home.png",
+				"selectedIconPath": "static/cx-images/home-fill.png",
 				"text": "首页"
 			},
 			{
 				"pagePath": "pages/tabBar/mine/mine",
-				"iconPath": "static/icons/mine.png",
-				"selectedIconPath": "static/icons/mine_.png",
+				"iconPath": "static/cx-images/mine.png",
+				"selectedIconPath": "static/cx-images/mine-fill.png",
 				"text": "我的"
 			}
 		]
