@@ -39,6 +39,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/tabBar/forum/detail/detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

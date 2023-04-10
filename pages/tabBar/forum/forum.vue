@@ -8,7 +8,9 @@
                     :class="tabIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
             </view>
         </scroll-view>
-            <media-item></media-item>
+        <view v-for="(newsItem,index) in newsList" @click="goDetail(newsItem)">
+            <media-item :options="newsItem"></media-item>
+        </view>
     </view>
 </template>
 
@@ -79,23 +81,26 @@
         data() {
             return {
                 newsList: [{
-                    "datetime": "40分钟前",
-                    "article_type": 0,
-                    "title": "uni-app行业峰会频频亮相，开发者反响热烈!",
+                    "datetime": "一天前",
+                    "article_type": 1,
+                    "title": "DCloud完成B2轮融资，uni-app震撼发布!",
+                    "image_url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/b7c7f970-517d-11eb-97b7-0dc4655d6e68.jpg",
                     "source": "DCloud",
-                    "comment_count": 639
+                    "comment_count": 11395
                 }, {
-                    "datetime": "40分钟前",
-                    "article_type": 0,
-                    "title": "uni-app行业峰会频频亮相，开发者反响热烈!",
+                    "datetime": "一天前",
+                    "article_type": 1,
+                    "title": "DCloud完成B2轮融资，uni-app震撼发布!",
+                    "image_url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/b7c7f970-517d-11eb-97b7-0dc4655d6e68.jpg",
                     "source": "DCloud",
-                    "comment_count": 639
+                    "comment_count": 11395
                 }, {
-                    "datetime": "40分钟前",
-                    "article_type": 0,
-                    "title": "uni-app行业峰会频频亮相，开发者反响热烈!",
+                    "datetime": "一天前",
+                    "article_type": 1,
+                    "title": "DCloud完成B2轮融资，uni-app震撼发布!",
+                    "image_url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/b7c7f970-517d-11eb-97b7-0dc4655d6e68.jpg",
                     "source": "DCloud",
-                    "comment_count": 639
+                    "comment_count": 11395
                 }, {
                     "datetime": "40分钟前",
                     "article_type": 0,
@@ -143,6 +148,21 @@
                 }
                 activeTab.data = activeTab.data.concat(list);
             },
+			goDetail: function(e) {
+                console.log('gzx goDetail')
+				// let detail = {
+				// 	author_name: e.author_name,
+				// 	cover: e.cover,
+				// 	id: e.id,
+				// 	post_id: e.post_id,
+				// 	published_at: e.published_at,
+				// 	title: e.title
+				// };
+                let detail = e;
+				uni.navigateTo({
+					url: './detail/detail?detailDate=' + encodeURIComponent(JSON.stringify(detail))
+				});
+			}
         }
     }
 </script>
