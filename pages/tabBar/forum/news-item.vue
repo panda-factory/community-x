@@ -3,8 +3,8 @@
         <!-- 标题 -->
         <view class="view">
             <text class="media-title">{{options.title}}</text>
-            <view v-if="options.image_url" class="image-section flex-row" :style="{flexDirection: 'row' }">
-                <image class="image-list" v-if="options.image_url" :src="options.image_url"></image> <text
+            <view v-if="options.imageUrl" class="image-section flex-row" :style="{flexDirection: 'row' }">
+                <image class="image-list" v-if="options.imageUrl" :src="options.imageUrl"></image> <text
                     class="info-text">{{options.datetime}}</text>
             </view>
         </view>
@@ -27,7 +27,10 @@
             options: {
                 type: Object,
                 default: function(e) {
-                    return {}
+                    return {
+                        // title:
+                        // imageUrl:
+                    }
                 }
             }
         },
