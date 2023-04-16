@@ -12,6 +12,7 @@
 </template>
 
 <script>
+    import { getFormattedDate } from 'common/js/date';
     let cloudPost = uniCloud.importObject('post');
     export default {
         data() {
@@ -19,7 +20,6 @@
                 title: '',
                 description: '',
                 imageUrls: [],
-                datetime: '',
                 imageOptions: {
                     filePath: '',
                     cloudPath: ''
@@ -38,7 +38,8 @@
 
                 let data = {
                     title: this.title,
-                    imageUrls: []
+                    imageUrls: [],
+                dateTime: getFormattedDate(),
                 };
 
                 await this.$refs.selectedFiles.upload();

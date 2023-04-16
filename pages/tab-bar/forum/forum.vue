@@ -8,7 +8,7 @@
                     :class="tabIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
             </view>
         </scroll-view>
-        <swiper class="swiper-box">
+        <swiper class="swiper-box" :current="tabIndex">
             <swiper-item class="swiper-item" style="height:100vh;">
                 <scroll-view class="scroll-v" scroll-y>
                     <view class="media-wrapper" v-for="(newsItem,index) in newsList" @click="goDetail(newsItem)">
@@ -38,13 +38,13 @@
                 newsList: [],
                 tabIndex: 0,
                 tabBars: [{
-                    name: '关注',
+                    name: '热门',
                     id: 'guanzhu'
                 }, {
-                    name: '周边',
+                    name: '闲置',
                     id: 'tuijian'
                 }, {
-                    name: '热点',
+                    name: '团购',
                     id: 'redian'
                 }, {
                     name: '本地',

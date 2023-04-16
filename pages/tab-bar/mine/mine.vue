@@ -23,7 +23,7 @@
 
 
         <uni-list class="center-list" v-for="(sublist , index) in ucenterList" :key="index">
-            <uni-list-item v-for="(item,i) in sublist" :title="item.title"></uni-list-item>
+            <uni-list-item v-for="(item,i) in sublist" :title="item.title" :to="item.navTo"></uni-list-item>
         </uni-list>
     </view>
 </template>
@@ -56,7 +56,8 @@
                 ],
                 ucenterList: [
                     [{
-                        "title": '设置'
+                        title: '设置',
+                        navTo: './setting/setting'
                     }, ]
                 ]
             }
@@ -76,6 +77,11 @@
                     this.loginWithoutPwd();
                 }
             },
+            navTo(url) {
+                uni.navigateTo({
+                    url: url
+                })
+            }
         },
         created() {},
         async onLoad() {
@@ -87,6 +93,11 @@
             },
             userInfo() {
                 return store.userInfo
+            }
+        },
+        onShow() {
+            if (!this.hasLogin) {
+                this.loginWithoutPwd();
             }
         }
     }

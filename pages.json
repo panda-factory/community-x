@@ -167,6 +167,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/tab-bar/mine/setting/setting",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
