@@ -1,12 +1,13 @@
 <template>
-    <view >
-        <view @click="chooseImage">
-            <text class="wrapper">选择图片</text>
+    <view>
+        <uni-file-picker v-model="imageUrls" ref="selectedFiles" :auto-upload="false" limit="9"
+            title="最多选择9张图片"></uni-file-picker>
+        <view>
+            <uni-easyinput v-model="title" placeholder="填写标题" :placeholderStyle="placeholderStyle"></uni-easyinput>
         </view>
-        <view >
-            <input @input="onTitleInput" focus="true" placeholder="主题"></input>
-        </view>
-        <view class="wrapper"  @click="submit">发布</view>
+        <uni-easyinput v-model="description" placeholder="说说此刻的想法"></uni-easyinput>
+
+        <view class="wrapper" @click="submit">发布</view>
     </view>
 </template>
 
@@ -16,12 +17,15 @@
         data() {
             return {
                 title: '',
+                description: '',
                 imageUrl: '',
                 datetime: '',
                 imageOptions: {
                     filePath: '',
                     cloudPath: ''
-                }
+                },
+                imageUrls: [],
+                placeholderStyle: "font-weight: bold;font-size:20px",
             }
         },
         methods: {
@@ -29,20 +33,20 @@
                 this.title = event.detail.value;
             },
             async submit() {
-                console.log('gzx submit: ' + JSON.stringify(this.imageOptions))
-                console.log('gzx submit title: ' + this.title)
+                console.log('gzx submit 1: ' + JSON.stringify(this.imageOptions))
+                // console.log('gzx submit imageUrls: ' + JSON.stringify(this.$refs.selectedFiles))
+
+
                 let data = {
                     title: this.title
                 };
 
-                await uniCloud.uploadFile({
-                    ...this.imageOptions,
-                    onUploadProgress(e) {
-                        console.log(e)
-                    }
-                }).then((res) => {
-                    data.imageUrl = res.fileID;
-                })
+
+                await this.$refs.selectedFiles.upload();
+                console.log('gzx submit 2: ' + this.imageUrls.length)
+                console.log('gzx submit 3: ' + JSON.stringify(this.imageUrls))
+                data.imageUrl = this.imageUrls[0].fileID;
+
                 console.log('gzx submit data: ' + JSON.stringify(data))
                 let result = await cloudPost.submit(data);
                 console.log('gzx submit result: ' + JSON.stringify(result))
@@ -120,7 +124,7 @@
 
 <style>
     .wrapper {
-		font-size: 20px;
+        font-size: 20px;
         background-color: #FFFFFF;
     }
 </style>
