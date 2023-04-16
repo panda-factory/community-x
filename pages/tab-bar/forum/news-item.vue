@@ -3,8 +3,8 @@
         <!-- 标题 -->
         <view class="view">
             <text class="media-title">{{options.title}}</text>
-            <view v-if="options.imageUrl" class="image-section flex-row" :style="{flexDirection: 'row' }">
-                <image class="image-list" v-if="options.imageUrl" :src="options.imageUrl"></image> <text
+            <view v-if="options.imageUrls && options.imageUrls[0]" class="image-section flex-row" :style="{flexDirection: 'row' }">
+                <image class="image-list" v-if="options.imageUrls[0]" :src="options.imageUrls[0]"></image> <text
                     class="info-text">{{options.datetime}}</text>
             </view>
         </view>
@@ -36,11 +36,12 @@
                 default: function(e) {
                     return {
                         // title:
-                        // imageUrl:
+                        // imageUrls:
                         // datetime: 
                         // forwardCount: 100, 转发数
                         // commentCount: 50,  评论数
                         // likeCount: 200     点赞数
+                        
                     }
                 }
             }

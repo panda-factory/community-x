@@ -21,7 +21,7 @@ module.exports = {
 		}
         let banner = {
                 title: data.title ? data.title : '',
-                imageUrl: data.imageUrl ? data.imageUrl : '',
+                imageUrls: data.imageUrls ? data.imageUrls : [],
                 dateTime: data.dateTime ? data.dateTime : '',
                 forwardCount: data.forwardCount ? data.forwardCount : 0,
                 commentCount: data.commentCount ? data.commentCount : 0,
