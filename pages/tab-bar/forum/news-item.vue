@@ -1,9 +1,15 @@
 <template>
     <view class="media-item view">
+        <uni-list :border="false">
+           <uni-list-item title="作者" :note="options.dateTime"
+           					thumb="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png"
+           					thumb-size="sm"/>
+        </uni-list>
         <!-- 标题 -->
         <view class="view">
             <text class="media-title">{{options.title}}</text>
-            <view v-if="options.imageUrls && options.imageUrls[0]" class="image-section flex-row" :style="{flexDirection: 'row' }">
+            <view v-if="options.imageUrls && options.imageUrls[0]" class="image-section flex-row"
+                :style="{flexDirection: 'row' }">
                 <image class="image-list" v-if="options.imageUrls[0]" :src="options.imageUrls[0]"></image> <text
                     class="info-text">{{options.datetime}}</text>
             </view>
@@ -37,16 +43,22 @@
                     return {
                         // title:
                         // imageUrls:
-                        // datetime: 
+                        // dateTime: 
                         // forwardCount: 100, 转发数
                         // commentCount: 50,  评论数
                         // likeCount: 200     点赞数
-                        
+
                     }
                 }
             }
         },
-        methods: {}
+        data() {
+            return {
+            }
+        },
+        methods: {},
+        created() {
+        }
     }
 </script>
 

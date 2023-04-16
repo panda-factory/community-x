@@ -65,7 +65,7 @@
         methods: {
             loginWithoutPwd() {
                 uni.navigateTo({
-                    url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd"
+                    url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd",
                 })
             },
             toUserInfo() {
@@ -85,7 +85,9 @@
         },
         created() {},
         async onLoad() {
-            console.log('gzx onLoad store: ' + JSON.stringify(store))
+            if (!this.hasLogin) {
+                this.loginWithoutPwd();
+            }
         },
         computed: {
             hasLogin() {
@@ -96,9 +98,7 @@
             }
         },
         onShow() {
-            if (!this.hasLogin) {
-                this.loginWithoutPwd();
-            }
+                        getApp().globalData.userInfo = store.userInfo;
         }
     }
 </script>
