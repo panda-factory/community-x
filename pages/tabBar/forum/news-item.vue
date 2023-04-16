@@ -8,16 +8,23 @@
                     class="info-text">{{options.datetime}}</text>
             </view>
         </view>
+        <!-- 分隔线 -->
+        <view class="media-item-line"></view>
         <!-- 注脚 -->
-        <view class="media-foot flex-row" style="flex-direction: row;">
-            <view class="media-info flex-row" style="flex-direction: row;">
-                <text class="info-text">{{options.source}}</text>
-                <text class="info-text">{{options.comment_count}}条评论</text>
-                <text class="info-text">{{options.datetime}}</text>
+        <view class="media-foot flex-row">
+            <view class="media-foot-ceil">
+                <uni-icons type="hand-up" size="24" color="#888888"></uni-icons>
+                <text class="info-text">{{options.likeCount}}</text>
+            </view>
+            <view class="media-foot-ceil">
+                <uni-icons type="chat" size="24" color="#888888"></uni-icons>
+                <text class="info-text">{{options.commentCount}}</text>
+            </view>
+            <view class="media-foot-ceil">
+                <uni-icons type="redo" size="24" color="#888888"></uni-icons>
+                <text class="info-text">{{options.forwardCount}}</text>
             </view>
         </view>
-        <!-- 分隔线 -->
-		<view class="media-item-line" style="position: absolute;"></view>
     </view>
 </template>
 
@@ -30,6 +37,10 @@
                     return {
                         // title:
                         // imageUrl:
+                        // datetime: 
+                        // forwardCount: 100, 转发数
+                        // commentCount: 50,  评论数
+                        // likeCount: 200     点赞数
                     }
                 }
             }
@@ -41,26 +52,24 @@
 <style>
     .view {
         flex-direction: column;
+        background-color: #ffffff;
     }
 
     .media-item {
         position: relative;
         flex: 1;
         flex-direction: column;
-        /* border-bottom-width: 1rpx;
-		border-bottom-style: solid;
-		border-bottom-color: #ebebeb; */
         padding: 20rpx 30rpx 21rpx 30rpx;
     }
 
-	.media-item-line {
-		position: absolute;
-		left: 30rpx;
-		right: 30rpx;
-		bottom: 0;
-		height: 1rpx;
-		background-color: #ebebeb;
-	}
+    .media-item-line {
+        left: 30rpx;
+        right: 30rpx;
+        bottom: 0;
+        height: 1rpx;
+        background-color: #eeeeee;
+    }
+
     .media-title {
         flex: 1;
     }
@@ -84,10 +93,18 @@
     }
 
     .media-foot {
+        display: flex;
         margin-top: 25rpx;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
+    }
+
+    .media-foot-ceil {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .flex-row {
@@ -101,7 +118,7 @@
 
     .info-text {
         margin-right: 20rpx;
-        color: #999999;
+        color: #888888;
         font-size: 24rpx;
     }
 </style>
