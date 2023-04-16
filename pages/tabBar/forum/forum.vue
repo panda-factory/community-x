@@ -1,6 +1,6 @@
 <template>
-    <view>
-        <scroll-view id="tab-bar" class="scroll-h" :scroll-x="true" :show-scrollbar="false"
+    <view class="tabs">
+        <scroll-view id="tab-bar" class="scroll-h" scroll-x="true" :show-scrollbar="false"
             :scroll-into-view="scrollInto">
             <view v-for="(tab,index) in tabBars" :key="tab.id" class="uni-tab-item" :id="tab.id" :data-current="index"
                 @click="ontabtap">
@@ -8,15 +8,21 @@
                     :class="tabIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
             </view>
         </scroll-view>
-        <view v-for="(newsItem,index) in newsList" @click="goDetail(newsItem)">
-            <media-item :options="newsItem"></media-item>
-        </view>
+        <swiper class="swiper-box">
+            <swiper-item class="swiper-item" style="height:100vh;">
+                <scroll-view class="scroll-v" scroll-y>
+                    <view class="media-wrapper" v-for="(newsItem,index) in newsList" @click="goDetail(newsItem)">
+                        <media-item :options="newsItem"></media-item>
+                    </view>
+                </scroll-view>
+            </swiper-item>
+        </swiper>
     </view>
 </template>
 
 <script>
     import mediaItem from './news-item.vue';
-    
+
     let cloudPost = uniCloud.importObject('post');
     // 缓存每页最多
     const MAX_CACHE_DATA = 100;
@@ -29,46 +35,7 @@
         },
         data() {
             return {
-                newsList: [{
-                    "datetime": "一天前",
-                    "article_type": 1,
-                    "title": "DCloud完成B2轮融资，uni-app震撼发布!",
-                    "imageUrl": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/b7c7f970-517d-11eb-97b7-0dc4655d6e68.jpg",
-                    "source": "DCloud",
-                    "comment_count": 11395
-                }, {
-                    "datetime": "一天前",
-                    "article_type": 1,
-                    "title": "DCloud完成B2轮融资，uni-app震撼发布!",
-                    "imageUrl": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/b7c7f970-517d-11eb-97b7-0dc4655d6e68.jpg",
-                    "source": "DCloud",
-                    "comment_count": 11395
-                }, {
-                    "datetime": "一天前",
-                    "article_type": 1,
-                    "title": "DCloud完成B2轮融资，uni-app震撼发布!",
-                    "imageUrl": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/b7c7f970-517d-11eb-97b7-0dc4655d6e68.jpg",
-                    "source": "DCloud",
-                    "comment_count": 11395
-                }, {
-                    "datetime": "40分钟前",
-                    "article_type": 0,
-                    "title": "uni-app行业峰会频频亮相，开发者反响热烈!",
-                    "source": "DCloud",
-                    "comment_count": 639
-                }, {
-                    "datetime": "40分钟前",
-                    "article_type": 0,
-                    "title": "uni-app行业峰会频频亮相，开发者反响热烈!",
-                    "source": "DCloud",
-                    "comment_count": 639
-                }, {
-                    "datetime": "40分钟前",
-                    "article_type": 0,
-                    "title": "uni-app行业峰会频频亮相，开发者反响热烈!",
-                    "source": "DCloud",
-                    "comment_count": 639
-                }, ],
+                newsList: [],
                 tabIndex: 0,
                 tabBars: [{
                     name: '关注',
@@ -88,31 +55,46 @@
         },
         onShow() {
             cloudPost.getTop().then((res) => {
-					console.log(res)
-                    this.newsList = res.data
-				})
+                console.log(res)
+                this.newsList = res.data
+            })
         },
         methods: {
-			goDetail: function(e) {
+            goDetail: function(e) {
                 console.log('gzx goDetail')
-				// let detail = {
-				// 	author_name: e.author_name,
-				// 	cover: e.cover,
-				// 	id: e.id,
-				// 	post_id: e.post_id,
-				// 	published_at: e.published_at,
-				// 	title: e.title
-				// };
                 let detail = e;
-				uni.navigateTo({
-					url: './detail/detail?detailDate=' + encodeURIComponent(JSON.stringify(detail))
-				});
-			}
+                uni.navigateTo({
+                    url: './detail/detail?detailDate=' + encodeURIComponent(JSON.stringify(detail))
+                });
+            }
         }
     }
 </script>
 
 <style>
+    page {
+        width: 100%;
+        min-height: 100%;
+        display: flex;
+    }
+
+    .tabs {
+        flex: 1;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .swiper-box {
+        flex: 1;
+        width: 100%;
+        height: calc(100vh - 100rpx);
+    }
+
+    .swiper-item {
+        flex: 1;
+        flex-direction: row;
+    }
+
     .uni-tab-item {
         /* #ifndef APP-PLUS */
         display: inline-block;
@@ -138,18 +120,20 @@
     }
 
     .scroll-h {
-        width: 750rpx;
-        /* #ifdef H5 */
+        flex: 1;
         width: 100%;
-        /* #endif */
-        height: 80rpx;
+        height: 100rpx;
         flex-direction: row;
-        /* #ifndef APP-PLUS */
-        white-space: nowrap;
-        /* #endif */
-        /* flex-wrap: nowrap; */
-        /* border-color: #cccccc;
-		border-bottom-style: solid;
-		border-bottom-width: 1px; */
+
+    }
+
+    .scroll-v {
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+    }
+
+    .media-wrapper {
+        margin-bottom: 20px;
     }
 </style>
