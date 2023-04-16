@@ -1,13 +1,13 @@
 {
 	"pages": [{
-		"path": "pages/tabBar/home/home",
+		"path": "pages/tab-bar/home/home",
 		"style": {
 			"navigationBarTitleText": "",
 			"enablePullDownRefresh": false
 		}
 
 	}, {
-		"path": "pages/tabBar/mine/mine",
+		"path": "pages/tab-bar/mine/mine",
 		"style": {
 			"navigationBarTitleText": "",
 			"enablePullDownRefresh": false
@@ -31,7 +31,7 @@
 			"enablePullDownRefresh": false
 		}
 	}    ,{
-            "path" : "pages/tabBar/forum/forum",
+            "path" : "pages/tab-bar/forum/forum",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
@@ -40,7 +40,7 @@
             
         }
         ,{
-            "path" : "pages/tabBar/forum/detail/detail",
+            "path" : "pages/tab-bar/forum/detail/detail",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
@@ -150,7 +150,7 @@
     }
 }
     ,{
-            "path" : "pages/tabBar/post/post",
+            "path" : "pages/tab-bar/post/post",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
@@ -159,7 +159,7 @@
             
         }
         ,{
-            "path" : "pages/tabBar/message/message",
+            "path" : "pages/tab-bar/message/message",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
@@ -183,31 +183,31 @@
 		"borderStyle": "black",
 		"backgroundColor": "#F8F8F8",
 		"list": [{
-				"pagePath": "pages/tabBar/home/home",
+				"pagePath": "pages/tab-bar/home/home",
 				"iconPath": "static/cx-images/home.png",
 				"selectedIconPath": "static/cx-images/home-fill.png",
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/tabBar/forum/forum",
+				"pagePath": "pages/tab-bar/forum/forum",
 				"iconPath": "static/cx-images/forum.png",
 				"selectedIconPath": "static/cx-images/forum-fill.png",
 				"text": "心声"
 			},
 			{
-				"pagePath": "pages/tabBar/post/post",
+				"pagePath": "pages/tab-bar/post/post",
 				"iconPath": "static/tabbar/add.png",
 				"selectedIconPath": "static/tabbar/addactive.png",
 				"text": "发布"
 			},
 			{
-				"pagePath": "pages/tabBar/message/message",
+				"pagePath": "pages/tab-bar/message/message",
 				"iconPath": "static/cx-images/mine.png",
 				"selectedIconPath": "static/cx-images/mine-fill.png",
 				"text": "消息"
 			},
 			{
-				"pagePath": "pages/tabBar/mine/mine",
+				"pagePath": "pages/tab-bar/mine/mine",
 				"iconPath": "static/cx-images/mine.png",
 				"selectedIconPath": "static/cx-images/mine-fill.png",
 				"text": "我的"
