@@ -1,5 +1,12 @@
 {
     "pages": [{
+        "path": "pages/tab-bar/forum/forum",
+        "style": {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+        }
+
+    }, {
         "path": "pages/tab-bar/home/home",
         "style": {
             "navigationBarTitleText": "",
@@ -30,13 +37,6 @@
         "style": {
             "navigationBarTitleText": "uni-app"
         }
-    }, {
-        "path": "pages/tab-bar/forum/forum",
-        "style": {
-            "navigationBarTitleText": "",
-            "enablePullDownRefresh": false
-        }
-
     }, {
         "path": "pages/tab-bar/forum/detail/detail",
         "style": {
@@ -169,13 +169,13 @@
                 "pagePath": "pages/tab-bar/home/home",
                 "iconPath": "static/cx-images/home.png",
                 "selectedIconPath": "static/cx-images/home-fill.png",
-                "text": "首页"
+                "text": "服务"
             },
             {
                 "pagePath": "pages/tab-bar/forum/forum",
                 "iconPath": "static/cx-images/forum.png",
                 "selectedIconPath": "static/cx-images/forum-fill.png",
-                "text": "心声"
+                "text": "邻说"
             },
             {
                 "pagePath": "pages/tab-bar/post/post",
@@ -187,7 +187,7 @@
                 "pagePath": "pages/tab-bar/message/message",
                 "iconPath": "static/cx-images/mine.png",
                 "selectedIconPath": "static/cx-images/mine-fill.png",
-                "text": "消息"
+                "text": "邻有"
             },
             {
                 "pagePath": "pages/tab-bar/mine/mine",
