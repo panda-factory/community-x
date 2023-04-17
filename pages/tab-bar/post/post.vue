@@ -7,12 +7,14 @@
         </view>
         <uni-easyinput v-model="description" placeholder="说说此刻的想法"></uni-easyinput>
 
-			<button type="primary" @click="submit">发布</button>
+        <button type="primary" @click="submit">发布</button>
     </view>
 </template>
 
 <script>
-    import { getFormattedDate } from 'common/js/date';
+    import {
+        getFormattedDate
+    } from 'common/js/date';
     let cloudPost = uniCloud.importObject('post');
     export default {
         data() {
@@ -37,9 +39,10 @@
 
 
                 let data = {
+                    userId: getApp().globalData.userInfo._id,
                     title: this.title,
                     imageUrls: [],
-                dateTime: getFormattedDate(),
+                    dateTime: getFormattedDate(),
                 };
 
                 await this.$refs.selectedFiles.upload();

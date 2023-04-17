@@ -4,7 +4,7 @@
         <banner :list="carousel"></banner>
         <!-- 分类 -->
         <view class="cate-section">
-            <view class="item" v-for="item in navList" @click="navTo(item.link)">
+            <view class="item" v-for="(item, index) in navList" @click="navTo(item.link)" :key="index">
                 <image class="icon" :src="item.image"></image>
                 <text>{{ item.name }}</text>
             </view>
@@ -14,6 +14,10 @@
 
 <script>
     import banner from './components/banner.vue'
+    import {
+        store,
+        mutations
+    } from '@/uni_modules/uni-id-pages/common/store.js'
     export default {
         components: {
             banner
@@ -45,6 +49,20 @@
                     url: url
                 })
             }
+        },
+        onInit() {
+        },
+        onShow() {
+        },
+        onReady() {
+            if (!store.hasLogin) {
+                uni.navigateTo({
+                    url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd"
+                })
+            } else {
+                getApp().globalData.userInfo = store.userInfo;
+            }
+            console.log('gzx home show: ' + JSON.stringify(getApp().globalData.userInfo))
         }
     }
 </script>
