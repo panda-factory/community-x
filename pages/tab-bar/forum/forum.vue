@@ -13,9 +13,7 @@
             <swiper-item class="swiper-item" style="height:100vh;">
                 <scroll-view class="scroll-v" scroll-y>
                     <view class="media-wrapper" v-for="(newsItem,index) in newsList" @click="goDetail(newsItem)">
-
                         <media-card :options="newsItem"> </media-card>
-                        <media-item :options="newsItem"></media-item>
                     </view>
                 </scroll-view>
             </swiper-item>
@@ -24,7 +22,6 @@
 </template>
 
 <script>
-    import mediaItem from './news-item.vue';
     import mediaCard from './components/media-card/media-card.vue';
 
     let cloudPost = uniCloud.importObject('post');
@@ -36,7 +33,6 @@
 
     export default {
         components: {
-            mediaItem,
             mediaCard
         },
         data() {
@@ -140,6 +136,5 @@
     }
 
     .media-wrapper {
-        margin-bottom: 20px;
     }
 </style>
