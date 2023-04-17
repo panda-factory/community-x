@@ -8,10 +8,13 @@
                     :class="tabIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
             </view>
         </scroll-view>
+
         <swiper class="swiper-box" :current="tabIndex">
             <swiper-item class="swiper-item" style="height:100vh;">
                 <scroll-view class="scroll-v" scroll-y>
                     <view class="media-wrapper" v-for="(newsItem,index) in newsList" @click="goDetail(newsItem)">
+
+                        <media-card :options="newsItem"> </media-card>
                         <media-item :options="newsItem"></media-item>
                     </view>
                 </scroll-view>
@@ -22,8 +25,10 @@
 
 <script>
     import mediaItem from './news-item.vue';
+    import mediaCard from './components/media-card/media-card.vue';
 
     let cloudPost = uniCloud.importObject('post');
+
     // 缓存每页最多
     const MAX_CACHE_DATA = 100;
     // 缓存页签数量
@@ -31,7 +36,8 @@
 
     export default {
         components: {
-            mediaItem
+            mediaItem,
+            mediaCard
         },
         data() {
             return {
