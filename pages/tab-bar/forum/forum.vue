@@ -66,7 +66,7 @@
                 console.log('gzx goDetail')
                 let detail = e;
                 uni.navigateTo({
-                    url: './detail/detail?detailDate=' + encodeURIComponent(JSON.stringify(detail))
+                    url: './detail/detail?data=' + encodeURIComponent(JSON.stringify(detail))
                 });
             }
         }

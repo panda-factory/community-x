@@ -45,7 +45,11 @@
                 }
             }
         },
-        methods: {}
+        methods: {
+            onClick: function() {
+                
+            }
+        }
     }
 </script>
 
