@@ -1,5 +1,6 @@
 <template>
     <view class="tabs">
+        <uni-icons type="plus-filled" color="#007aff" size="30" @click="publish"></uni-icons>
         <scroll-view id="tab-bar" class="scroll-h" scroll-x="true" :show-scrollbar="false"
             :scroll-into-view="scrollInto">
             <view v-for="(tab,index) in tabBars" :key="tab.id" class="uni-tab-item" :id="tab.id" :data-current="index"
@@ -8,6 +9,7 @@
                     :class="tabIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
             </view>
         </scroll-view>
+
 
         <swiper class="swiper-box" :current="tabIndex" @change="onTabChange">
             <swiper-item class="swiper-item" style="height:100vh;" v-for="(tab,index1) in tabBars" :key="index1">
@@ -19,6 +21,7 @@
                 </scroll-view>
             </swiper-item>
         </swiper>
+
     </view>
 </template>
 
@@ -70,6 +73,17 @@
                 uni.navigateTo({
                     url: './detail/detail?data=' + encodeURIComponent(JSON.stringify(detail))
                 });
+            },
+            publish: function() {
+                uni.navigateTo({
+                    url: '/pages/tab-bar/post/post',
+                    complete(e) {
+                        console.log('gzx complete')
+                    },
+                    fail(e) {
+                        console.log('gzx fail: ' + JSON.stringify(e))
+                    }
+                })
             }
         }
     }
