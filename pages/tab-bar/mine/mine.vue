@@ -85,9 +85,9 @@
         },
         created() {},
         async onLoad() {
-            if (!this.hasLogin) {
-                this.loginWithoutPwd();
-            }
+            // if (!this.hasLogin) {
+            // this.loginWithoutPwd();
+            // }
         },
         computed: {
             hasLogin() {
@@ -98,7 +98,8 @@
             }
         },
         onShow() {
-                        getApp().globalData.userInfo = store.userInfo;
+            getApp().globalData.userInfo = store.userInfo;
+            console.log('gzx mine onshow: ' + JSON.stringify(getApp().globalData.userInfo))
         }
     }
 </script>

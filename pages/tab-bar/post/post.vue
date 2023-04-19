@@ -16,6 +16,7 @@
         getFormattedDate
     } from 'common/js/date';
     let cloudPost = uniCloud.importObject('post');
+    let cxId = uniCloud.importObject('cx-id');
     export default {
         data() {
             return {
@@ -34,8 +35,7 @@
                 this.title = event.detail.value;
             },
             async submit() {
-                console.log('gzx submit 1: ' + JSON.stringify(this.imageOptions))
-                // console.log('gzx submit imageUrls: ' + JSON.stringify(this.$refs.selectedFiles))
+                console.log('gzx submit imageUrls: ' + JSON.stringify(getApp().globalData.userInfo))
 
 
                 let data = {
@@ -45,7 +45,9 @@
                     dateTime: getFormattedDate(),
                 };
 
+
                 await this.$refs.selectedFiles.upload();
+                
                 console.log('gzx submit 2: ' + this.imageUrls.length)
                 console.log('gzx submit 3: ' + JSON.stringify(this.imageUrls))
                 this.imageUrls.forEach(element => {

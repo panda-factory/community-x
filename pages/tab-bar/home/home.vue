@@ -56,9 +56,9 @@
         },
         onReady() {
             if (!store.hasLogin) {
-                uni.navigateTo({
-                    url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd"
-                })
+                // uni.navigateTo({
+                //     url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd"
+                // })
             } else {
                 getApp().globalData.userInfo = store.userInfo;
             }
