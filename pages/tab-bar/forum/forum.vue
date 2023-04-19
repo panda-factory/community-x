@@ -1,9 +1,13 @@
 <template>
-    <view class="tabs">
-        <uni-icons type="plus-filled" color="#007aff" size="30" @click="publish"></uni-icons>
+    <view class="container">
+        <view class="tabs">
+            <!-- <uni-icons class="tabbar" type="plus-filled" color="#007aff" size="30" @click="publish"></uni-icons> -->
+            <uni-segmented-control class="tabbar-first" style="width: 200rpx;" :current="tabIndex" :values="tabbars" style-type="text" />
+            <uni-icons class="tabbar-last" type="plus-filled" color="#007aff" size="30" @click="publish"></uni-icons>
+        </view>
         <scroll-view id="tab-bar" class="scroll-h" scroll-x="true" :show-scrollbar="false"
             :scroll-into-view="scrollInto">
-            <view v-for="(tab,index) in tabBars" :key="tab.id" class="uni-tab-item" :id="tab.id" :data-current="index"
+            <view v-for="(tab,index) in category" :key="tab.id" class="uni-tab-item" :id="tab.id" :data-current="index"
                 @click="ontabtap">
                 <text class="uni-tab-item-title"
                     :class="tabIndex==index ? 'uni-tab-item-title-active' : ''">{{tab.name}}</text>
@@ -12,7 +16,7 @@
 
 
         <swiper class="swiper-box" :current="tabIndex" @change="onTabChange">
-            <swiper-item class="swiper-item" style="height:100vh;" v-for="(tab,index1) in tabBars" :key="index1">
+            <swiper-item class="swiper-item" style="height:100vh;" v-for="(tab,index1) in category" :key="index1">
                 <scroll-view class="scroll-v" scroll-y>
                     <view class="media-wrapper" v-for="(newsItem,index2) in newsList" @click="goDetail(newsItem)"
                         :key="index2">
@@ -42,8 +46,9 @@
         data() {
             return {
                 newsList: [],
+                tabbars: ['关注', '广场'],
                 tabIndex: 0,
-                tabBars: [{
+                category: [{
                     name: '邻居动态',
                     id: 'guanzhu'
                 }, {
@@ -89,17 +94,31 @@
     }
 </script>
 
-<style>
+<style lang="scss">
     page {
         width: 100%;
         min-height: 100%;
         display: flex;
     }
 
-    .tabs {
+    .container {
         flex: 1;
         flex-direction: column;
         overflow: hidden;
+    }
+
+    .tabs {
+        display: flex;
+        justify-content: space-between;
+        /* 两端对齐 */
+        align-items: center;
+
+        .tabbar-first {
+            margin-left: 36%;
+        }
+        .tabbar-last {
+            // margin-left: auto;
+        }
     }
 
     .swiper-box {
