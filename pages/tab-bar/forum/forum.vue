@@ -9,10 +9,11 @@
             </view>
         </scroll-view>
 
-        <swiper class="swiper-box" :current="tabIndex">
-            <swiper-item class="swiper-item" style="height:100vh;">
+        <swiper class="swiper-box" :current="tabIndex" @change="onTabChange">
+            <swiper-item class="swiper-item" style="height:100vh;" v-for="(tab,index1) in tabBars" :key="index1">
                 <scroll-view class="scroll-v" scroll-y>
-                    <view class="media-wrapper" v-for="(newsItem,index) in newsList" @click="goDetail(newsItem)">
+                    <view class="media-wrapper" v-for="(newsItem,index2) in newsList" @click="goDetail(newsItem)"
+                        :key="index2">
                         <media-card :options="newsItem"> </media-card>
                     </view>
                 </scroll-view>
@@ -40,17 +41,11 @@
                 newsList: [],
                 tabIndex: 0,
                 tabBars: [{
-                    name: '热门',
+                    name: '邻居动态',
                     id: 'guanzhu'
                 }, {
-                    name: '闲置',
+                    name: '话题讨论',
                     id: 'tuijian'
-                }, {
-                    name: '团购',
-                    id: 'redian'
-                }, {
-                    name: '本地',
-                    id: 'bendi'
                 }],
                 scrollInto: "",
             }
@@ -62,6 +57,13 @@
             })
         },
         methods: {
+            onTabChange(e) {
+                let index = e.target.current || e.detail.current;
+                this.switchTab(index);
+            },
+            switchTab(index) {
+                this.tabIndex = index;
+            },
             goDetail: function(e) {
                 console.log('gzx goDetail')
                 let detail = e;
@@ -135,6 +137,5 @@
         flex-direction: column;
     }
 
-    .media-wrapper {
-    }
+    .media-wrapper {}
 </style>
