@@ -1,15 +1,21 @@
 /* 布局 */
-.row{
-	/* #ifndef APP-PLUS-NVUE */
-	display:flex;
-	/* #endif */
-	flex-direction:row;
-	align-items: center;
+.cx-container {
+    padding: 15px;
+    background-color: #ffffff;
 }
-.center{
-	/* #ifndef APP-PLUS-NVUE */
-	display:flex;
-	/* #endif */
-	align-items: center;
-	justify-content: center;
+
+.row {
+    /* #ifndef APP-PLUS-NVUE */
+    display: flex;
+    /* #endif */
+    flex-direction: row;
+    align-items: center;
+}
+
+.center {
+    /* #ifndef APP-PLUS-NVUE */
+    display: flex;
+    /* #endif */
+    align-items: center;
+    justify-content: center;
 }
