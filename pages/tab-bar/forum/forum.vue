@@ -59,10 +59,10 @@
             }
         },
         onShow() {
-            cloudPost.getTop().then((res) => {
-                console.log(res)
-                this.newsList = res.data
-            })
+            // cloudPost.getTop().then((res) => {
+            //     console.log(res)
+            //     this.newsList = res.data
+            // })
         },
         methods: {
             onTabChange(e) {
