@@ -12,16 +12,17 @@
                 </swiper-item>
             </swiper>
         </uni-swiper-dot>
-        <comment-list></comment-list>
+        <comment-list :commenteds="commenteds"></comment-list>
 
         <view class="input-box">
-            <uni-easyinput suffixIcon="paperplane" v-model="commentInput" placeholder="评论" @iconClick="sendComment"/>
+            <uni-easyinput suffixIcon="paperplane" v-model="commentInput" placeholder="评论" @iconClick="sendComment" />
         </view>
     </view>
 </template>
 
 <script>
     import commentList from '@/pages/tab-bar/forum/components/comment/comment-list.vue'
+    let cloudPost = uniCloud.importObject('post');
     export default {
         components: {
             commentList
@@ -32,7 +33,15 @@
                 bannerId: '',
                 imageUrls: [],
                 title: '',
-                commentInput: ''
+                commentInput: '',
+                commenteds: [{
+                    comment: {
+                        userId: '',
+                        avatar: '',
+                        nickname: 'nickn111ame',
+                        comment: 'comment'
+                    }
+                }],
             }
         },
         onLoad(options) {
@@ -42,23 +51,31 @@
             this.bannerId = data._id;
             this.imageUrls = data.imageUrls;
             this.title = data.title;
+            
+            cloudPost.getDetail(this.bannerId).then(result => {
+                console.log('gzx detail onLoad cloudPost.getDetail: ' + JSON.stringify(result));
+                this.commenteds = result.commenteds;
+            })
         },
         onShareAppMessage() {
-          return {
-				title: this.title,
-				path: '/pages/tab-bar/forum/detail/detail?data=' + this.inputParams,
-				imageUrl:this.imageUrls[0]
-          }  
+            return {
+                title: this.title,
+                path: '/pages/tab-bar/forum/detail/detail?data=' + this.inputParams,
+                imageUrl: this.imageUrls[0]
+            }
         },
         methods: {
-            sendComment: function() {
+            async sendComment() {
                 let commentBanner = {
-                    bannerId: this.bannerId,
-                    userId: getApp().globalData.userInfo._id,
-                    value: this.commentInput
+                    postId: '6443c5ece1a35c371bbfcecb', // this.bannerId,
+                    userId: '6437ff7de1a35cf99fb7c289', // getApp().globalData.userInfo._id,
+                    comment: this.commentInput,
+                    commentedId: -1
                 }
 
                 console.log('gzx sendComment: ' + JSON.stringify(commentBanner))
+                let result = await cloudPost.submitComment(commentBanner);
+                console.log('gzx sendComment result: ' + JSON.stringify(result))
             }
         }
     }
