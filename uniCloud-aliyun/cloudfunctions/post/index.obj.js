@@ -93,10 +93,12 @@ module.exports = {
             });
         }
         // 返回结果
-        let rawUserData = await userDatas.doc(comment.userId).get();
-        let userInfo = rawUserData.data[0];
-        comment.nickname = userInfo.nickname;
-        return comment;
+        
+        const commenteds = await Promise.all(post.commenteds.map(async (commented) => {
+            commented.comment = await formatCommentReturn(commented.comment);
+            return commented;
+        }));
+        return commenteds;
     },
 
     /**

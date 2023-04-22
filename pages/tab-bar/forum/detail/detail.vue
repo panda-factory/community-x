@@ -34,14 +34,7 @@
                 imageUrls: [],
                 title: '',
                 commentInput: '',
-                commenteds: [{
-                    comment: {
-                        userId: '',
-                        avatar: '',
-                        nickname: 'nickn111ame',
-                        comment: 'comment'
-                    }
-                }],
+                commenteds: [],
             }
         },
         onLoad(options) {
@@ -76,6 +69,7 @@
                 console.log('gzx sendComment: ' + JSON.stringify(commentBanner))
                 let result = await cloudPost.submitComment(commentBanner);
                 console.log('gzx sendComment result: ' + JSON.stringify(result))
+                this.commenteds = result;
             }
         }
     }
