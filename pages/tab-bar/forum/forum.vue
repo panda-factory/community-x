@@ -2,7 +2,7 @@
     <view class="container">
         <view class="tabs">
             <!-- <uni-icons class="tabbar" type="plus-filled" color="#007aff" size="30" @click="publish"></uni-icons> -->
-            <uni-segmented-control class="tabbar-first" style="width: 200rpx;" :current="tabIndex" :values="tabbars" style-type="text" />
+            <uni-segmented-control class="tabbar-first" style="width: 200rpx;" :current="topTabIndex" :values="tabbars" style-type="text" />
             <uni-icons class="tabbar-last" type="plus-filled" color="#007aff" size="30" @click="publish"></uni-icons>
         </view>
         <scroll-view id="tab-bar" class="scroll-h" scroll-x="true" :show-scrollbar="false"
@@ -47,6 +47,7 @@
             return {
                 newsList: [],
                 tabbars: ['关注', '广场'],
+                topTabIndex: 1,
                 tabIndex: 0,
                 category: [{
                     name: '邻居动态',
@@ -59,10 +60,10 @@
             }
         },
         onShow() {
-            // cloudPost.getTop().then((res) => {
-            //     console.log(res)
-            //     this.newsList = res.data
-            // })
+            cloudPost.getTop().then((res) => {
+                console.log(res)
+                this.newsList = res.data
+            })
         },
         methods: {
             onTabChange(e) {
