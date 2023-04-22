@@ -1,21 +1,23 @@
 <template>
     <view class="container">
-        <!-- 标题 -->
-        <view>
-            <text>{{title}}</text>
-        </view>
-        <!-- 图片 -->
-        <uni-swiper-dot>
-            <swiper>
-                <swiper-item v-for="(imageUrl, index) in imageUrls" :key="index">
-                    <image :src="imageUrl"></image>
-                </swiper-item>
-            </swiper>
-        </uni-swiper-dot>
-        <comment-list :commenteds="commenteds"></comment-list>
+        <scroll-view scroll-y style="height: calc(100vh - 100rpx);">
+            <!-- 标题 -->
+            <view>
+                <text>{{title}}</text>
+            </view>
+            <!-- 图片 -->
+            <uni-swiper-dot>
+                <swiper>
+                    <swiper-item v-for="(imageUrl, index) in imageUrls" :key="index">
+                        <image :src="imageUrl"></image>
+                    </swiper-item>
+                </swiper>
+            </uni-swiper-dot>
+            <comment-list :commenteds="commenteds"></comment-list>
+        </scroll-view>
 
         <view class="input-box">
-            <uni-easyinput suffixIcon="paperplane" v-model="commentInput" placeholder="评论" @iconClick="sendComment" />
+            <uni-easyinput class="input" suffixIcon="paperplane" v-model="commentInput" placeholder="评论" @iconClick="sendComment"/>
         </view>
     </view>
 </template>
@@ -44,7 +46,7 @@
             this.bannerId = data._id;
             this.imageUrls = data.imageUrls;
             this.title = data.title;
-            
+
             cloudPost.getDetail(this.bannerId).then(result => {
                 console.log('gzx detail onLoad cloudPost.getDetail: ' + JSON.stringify(result));
                 this.commenteds = result.commenteds;
@@ -83,20 +85,18 @@
     }
 
     .input-box {
-        display: flex;
-        height: 60px;
+        position: fixed;
+        bottom: 0;
         align-items: center;
+        width: 100%;
         padding: 10px;
         background-color: #fff;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
 
         .input {
-            flex: 1;
-            height: 40px;
-            margin-right: 10px;
-            padding: 0 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            width: calc(100% - 20px);
+            border-radius: 10px;
         }
     }
 </style>
