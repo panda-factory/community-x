@@ -28,6 +28,7 @@
         },
         data() {
             return {
+                inputParams: '',
                 bannerId: '',
                 imageUrls: [],
                 title: '',
@@ -36,10 +37,18 @@
         },
         onLoad(options) {
             console.log('gzx detail onLoad: ' + options.data);
-            let data = JSON.parse(options.data);
+            this.inputParams = options.data;
+            let data = JSON.parse(decodeURIComponent(options.data));
             this.bannerId = data._id;
             this.imageUrls = data.imageUrls;
             this.title = data.title;
+        },
+        onShareAppMessage() {
+          return {
+				title: this.title,
+				path: '/pages/tab-bar/forum/detail/detail?data=' + this.inputParams,
+				imageUrl:this.imageUrls[0]
+          }  
         },
         methods: {
             sendComment: function() {
