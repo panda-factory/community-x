@@ -73,13 +73,6 @@
             switchTab(index) {
                 this.tabIndex = index;
             },
-            goDetail: function(e) {
-                console.log('gzx goDetail')
-                let detail = e;
-                uni.navigateTo({
-                    url: './detail/detail?data=' + encodeURIComponent(JSON.stringify(detail))
-                });
-            },
             publish: function() {
                 uni.navigateTo({
                     url: '/pages/tab-bar/post/post',

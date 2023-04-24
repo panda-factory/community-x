@@ -4,9 +4,8 @@
             :cover="options.imageUrls && options.imageUrls[0]"
             :thumbnail="options.avatar_file.url"
             @click="onClick">
-            <!-- <image slot='cover' style="width: 100%;" :src="cover"></image> -->
             <text class="uni-body">{{options.title}}</text>
-            <view slot="actions" class="card-actions">
+            <view slot="actions" class="card-actions" @click.stop>
                 <view class="card-actions-item" @click="actionsClick('点赞')">
                     <uni-icons type="heart" size="18" color="#999"></uni-icons>
                     <text class="card-actions-item-text">{{options.likeCount}}</text>
@@ -51,7 +50,8 @@
         },
         methods: {
             onClick: function() {
-
+                console.log('gzx onClick: ')
+                this.goDetail();
             },
             actionsClick(action) {
                 console.log('gzx actionsClick: ' + this.options._id)
@@ -62,7 +62,13 @@
                 if (action === '点赞') {
                     cloudPost.addLike(this.options._id);
                 }
-            }
+            },
+            goDetail: function() {
+                console.log('gzx goDetail')
+                uni.navigateTo({
+                    url: './detail/detail?data=' + encodeURIComponent(JSON.stringify(this.options))
+                });
+            },
         }
     }
 </script>
