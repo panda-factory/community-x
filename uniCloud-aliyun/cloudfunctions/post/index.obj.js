@@ -139,6 +139,26 @@ module.exports = {
         post.commenteds = commenteds;
         return post;
     },
+
+    /**
+     * 获取
+     * @param {string} param1 参数1描述
+     * @returns {object} 返回值描述
+     */
+    async addLike(postId) {
+        let postRawData = await postData.doc(postId).get();
+        let post = postRawData.data[0];
+        post.likeCount++;
+        console.log('gzx Cloud getDetail: ' + JSON.stringify(post));
+
+        delete post._id;
+        await postData.doc(postId).update(post).then(res => {
+            console.log('更新成功：' + res);
+        }).catch(err => {
+            console.error('更新失败：' + err);
+        });
+        return;
+    },
 }
 
 async function formatCommentReturn(comment) {

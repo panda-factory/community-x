@@ -18,7 +18,7 @@
         <swiper class="swiper-box" :current="tabIndex" @change="onTabChange">
             <swiper-item class="swiper-item" style="height:100vh;" v-for="(tab,index1) in category" :key="index1">
                 <scroll-view class="scroll-v" scroll-y>
-                    <view class="media-wrapper" v-for="(newsItem,index2) in newsList" @click="goDetail(newsItem)"
+                    <view class="media-wrapper" v-for="(newsItem,index2) in newsList"
                         :key="index2">
                         <media-card :options="newsItem"> </media-card>
                     </view>
