@@ -115,6 +115,7 @@ module.exports = {
             }).get();
             console.log(JSON.stringify(data));
             item.nickname = data.data[0].nickname;
+            item.avatar_file = data.data[0].avatar_file;
             return item;
         }))
         console.log('gzx Cloud: ' + JSON.stringify(result));
