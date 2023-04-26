@@ -25,9 +25,9 @@
 						<text v-if="title" class="comment-item__author"
 							:class="[ellipsis !== 0 && ellipsis <= 2 ? 'uni-ellipsis-' + ellipsis : '']">{{ title }}</text>
 						<text v-if="note" class=".comment-item__content">{{ note }}</text>
-                        <comment-sub-item title="列表左侧带略缩图" note="列表描述xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx信息" showArrow
+                    <!--    <comment-sub-item title="列表左侧带略缩图" note="列表描述xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx信息" showArrow
                         	thumb="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png"
-                        	thumb-size="sm" rightText="默认" />
+                        	thumb-size="sm" rightText="默认" /> -->
 					</view>
 				</slot>
 				<slot name="footer">

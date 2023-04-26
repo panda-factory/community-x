@@ -1,23 +1,25 @@
 <template>
     <view class="container">
         <scroll-view scroll-y style="height: calc(100vh - 100rpx);">
+            <!-- 图片 -->
+            <swiper class="swiper-box" indicator-dots="true">
+                <swiper-item v-for="(imageUrl, index) in imageUrls" :key="index">
+                    <view class="swiper-item">
+                        <image :src="imageUrl"></image>
+                    </view>
+                </swiper-item>
+            </swiper>
+
             <!-- 标题 -->
             <view>
-                <text>{{title}}</text>
+                <uni-title type="h2" :title="title"></uni-title>
             </view>
-            <!-- 图片 -->
-            <uni-swiper-dot>
-                <swiper>
-                    <swiper-item v-for="(imageUrl, index) in imageUrls" :key="index">
-                        <image :src="imageUrl"></image>
-                    </swiper-item>
-                </swiper>
-            </uni-swiper-dot>
             <comment-list :commenteds="commenteds"></comment-list>
         </scroll-view>
 
         <view class="input-box">
-            <uni-easyinput class="input" suffixIcon="paperplane" v-model="commentInput" placeholder="评论" @iconClick="sendComment"/>
+            <uni-easyinput class="input" suffixIcon="paperplane" v-model="commentInput" placeholder="评论"
+                @iconClick="sendComment" />
         </view>
     </view>
 </template>
@@ -36,7 +38,7 @@
                 imageUrls: [],
                 title: '',
                 commentInput: '',
-                commenteds: [],
+                commenteds: []
             }
         },
         onLoad(options) {
@@ -92,11 +94,26 @@
         padding: 10px;
         background-color: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+        border-radius: 10px;
 
         .input {
             width: calc(100% - 20px);
             border-radius: 10px;
+        }
+    }
+
+    .swiper-box {
+        // height: 200px;
+
+        .swiper-item {
+            /* #ifndef APP-NVUE */
+            display: flex;
+            /* #endif */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            color: #fff;
         }
     }
 </style>
