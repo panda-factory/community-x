@@ -4,7 +4,13 @@
     font-size: 17px;
 }
 
+/* 用于大标题、页面正文 */
+.cx-desc-text {
+    font-size: 14px;
+}
+
 /* 用于注脚、标注 */
 .cx-foot-node {
     font-size: 12px;
+    color: rgba(0, 0, 0, 0.3);
 }

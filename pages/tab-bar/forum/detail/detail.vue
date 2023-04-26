@@ -1,6 +1,7 @@
 <template>
     <view class="container">
         <scroll-view scroll-y style="height: calc(100vh - 100rpx);">
+            <cx-avatar></cx-avatar>
             <!-- 图片 -->
             <swiper class="swiper-box" indicator-dots="true">
                 <swiper-item  class="swiper-item" v-for="(imageUrl, index) in imageUrls" :key="index">
@@ -15,7 +16,6 @@
                 <uni-title type="h2" :title="title"></uni-title>
             </view>
             
-            <cx-avatar></cx-avatar>
             <!-- 评论区 -->
             <view>
             <comment-list :commenteds="commenteds"></comment-list>

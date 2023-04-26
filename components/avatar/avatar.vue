@@ -11,8 +11,8 @@
 
         <!-- 昵称 -->
         <view class="nickname-wrapper">
-            <text class="cx-text" v-if="nickname">{{ nickname }}</text>
-            <text v-if="note">{{ note }}</text>
+            <text class="cx-desc-text" v-if="nickname">{{ nickname }}</text>
+            <text class="cx-foot-node" v-if="note">{{ note }}</text>
         </view>
     </view>
 </template>
@@ -63,13 +63,14 @@
         // padding-left: $uni-spacing-row-lg;
         overflow: hidden;
 
-        // align-items: center;
+        align-items: center;
     }
 
     .avatar-wrapper {
         display: flex;
         flex-direction: row;
         align-items: center;
+        padding: 5px;
 
         .header-circle {
             margin: 1px;
