@@ -3,7 +3,7 @@
         <uni-section title="评论" type="line">
             <uni-list v-for="(commented, index) in commenteds" :key="index">
                 <comment-item :title="commented.comment.nickname" :note="commented.comment.comment" showArrow
-                    thumb="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-dc-site/460d46d0-4fcc-11eb-8ff1-d5dcf8779628.png"
+                    :thumb="commented.comment.avatar_file.url"
                     thumb-size="base" rightText="默认" />
             </uni-list>
         </uni-section>

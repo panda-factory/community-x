@@ -369,7 +369,6 @@
 		padding-right: 0;
 	}
 
-	/* #endif */
 	.comment-item__content {
 		/* #ifndef APP-NVUE */
 		display: flex;

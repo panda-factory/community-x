@@ -15,9 +15,10 @@
      likeCount: number
  }
  * Comment: {
-     userId: string,
-     nicknameId: number,
-     comment: string}
+ *    userId: string,
+ *    nicknameId: number,
+ *    comment: string
+ *    }
  */
 const db = uniCloud.database();
 const postData = db.collection('post-data')
@@ -166,5 +167,6 @@ async function formatCommentReturn(comment) {
     let rawUserData = await userDatas.doc(comment.userId).get();
     let userInfo = rawUserData.data[0];
     comment.nickname = userInfo.nickname;
+    comment.avatar_file = userInfo.avatar_file;
     return comment;
 }
