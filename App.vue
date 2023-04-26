@@ -24,6 +24,7 @@
     /*每个页面公共css */
     @import '@/uni_modules/uni-scss/index.scss';
     @import url("./common/css/common.css");
+    @import url("./common/css/text-style.css");
     @import url("./common/css/icon.css");
     /* #ifndef APP-NVUE */
     @import '@/static/customicons.css';

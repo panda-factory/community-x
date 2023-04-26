@@ -3,9 +3,9 @@
         <scroll-view scroll-y style="height: calc(100vh - 100rpx);">
             <!-- 图片 -->
             <swiper class="swiper-box" indicator-dots="true">
-                <swiper-item v-for="(imageUrl, index) in imageUrls" :key="index">
+                <swiper-item  class="swiper-item" v-for="(imageUrl, index) in imageUrls" :key="index">
                     <view class="swiper-item">
-                        <image :src="imageUrl"></image>
+                        <image :src="imageUrl" mode="aspectFit"></image>
                     </view>
                 </swiper-item>
             </swiper>
@@ -14,7 +14,12 @@
             <view>
                 <uni-title type="h2" :title="title"></uni-title>
             </view>
+            
+            <cx-avatar></cx-avatar>
+            <!-- 评论区 -->
+            <view>
             <comment-list :commenteds="commenteds"></comment-list>
+            </view>
         </scroll-view>
 
         <view class="input-box">
@@ -26,10 +31,12 @@
 
 <script>
     import commentList from '@/pages/tab-bar/forum/components/comment/comment-list.vue'
+    import cxAvatar from '@/components/avatar/avatar.vue'
     let cloudPost = uniCloud.importObject('post');
     export default {
         components: {
-            commentList
+            commentList,
+            cxAvatar
         },
         data() {
             return {
@@ -86,6 +93,22 @@
         // height: 100vh;
     }
 
+    .swiper-box {
+        // height: auto;
+
+        .swiper-item {
+            /* #ifndef APP-NVUE */
+            display: flex;
+            /* #endif */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+        }
+    }
+
     .input-box {
         position: fixed;
         bottom: 0;
@@ -99,21 +122,6 @@
         .input {
             width: calc(100% - 20px);
             border-radius: 10px;
-        }
-    }
-
-    .swiper-box {
-        // height: 200px;
-
-        .swiper-item {
-            /* #ifndef APP-NVUE */
-            display: flex;
-            /* #endif */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            color: #fff;
         }
     }
 </style>
