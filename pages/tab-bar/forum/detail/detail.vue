@@ -4,9 +4,9 @@
             <cx-avatar></cx-avatar>
             <!-- 图片 -->
             <swiper class="swiper-box" indicator-dots="true">
-                <swiper-item  class="swiper-item" v-for="(imageUrl, index) in imageUrls" :key="index">
-                    <view class="swiper-item">
-                        <image :src="imageUrl" mode="aspectFit"></image>
+                <swiper-item class="swiper-item" v-for="(imageUrl, index) in imageUrls" :key="index">
+                    <view class="swiper-item--image">
+                        <image class="swiper-item--image" :src="imageUrl" mode="widthFix"></image>
                     </view>
                 </swiper-item>
             </swiper>
@@ -15,10 +15,10 @@
             <view>
                 <uni-title type="h2" :title="title"></uni-title>
             </view>
-            
+
             <!-- 评论区 -->
             <view>
-            <comment-list :commenteds="commenteds"></comment-list>
+                <comment-list :commenteds="commenteds"></comment-list>
             </view>
         </scroll-view>
 
@@ -95,17 +95,16 @@
 
     .swiper-box {
         // height: auto;
+        height: 400px;
 
         .swiper-item {
-            /* #ifndef APP-NVUE */
             display: flex;
-            /* #endif */
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            height: 100%;
-            color: #fff;
+            background-color: #fff;
+
+            .swiper-item--image {
+            }
         }
     }
 
