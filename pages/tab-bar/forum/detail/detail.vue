@@ -14,7 +14,7 @@
             </swiper>
 
             <view class="article-content">
-            <!-- 标题 -->
+                <!-- 标题 -->
                 <uni-title type="h1" :title="title"></uni-title>
                 <text>正文</text>
                 <view class="article-foot">
@@ -28,21 +28,22 @@
         <!-- 评论区 -->
         <view class="comment-wrapper">
             <scroll-view class="comment-scroll" scroll-y>
-                <view>
-                    <uni-section title="评论" type="line">
-                        <comment-list :commenteds="commenteds"></comment-list>
-                    </uni-section>
-                </view>
+                <uni-section title="评论" type="line">
+                    <view class="comment-content">
+                        <comment-list v-if="commenteds.length!==0" :commenteds="commenteds"></comment-list>
+                        <text v-else class="cx-foot-node">评论点什么吧</text>
+                    </view>
+                </uni-section>
             </scroll-view>
         </view>
 
 
-        <view class="input-bottom">
-            <view class="bottom-wrapper">
+        <view class="bottom-wrapper">
+            <view class="input-bottom">
                 <uni-easyinput class="input" suffixIcon="paperplane" v-model="commentInput" placeholder="评论"
                     @iconClick="sendComment" />
 
-                <uni-icons type="heart"></uni-icons>
+                <uni-icons type="heart" size="25px"></uni-icons>
             </view>
         </view>
     </view>
@@ -131,27 +132,35 @@
             .article-content {
                 padding: 16px;
             }
-            
-            .article-foot {
-                
-            }
+
+            .article-foot {}
         }
 
         .comment-wrapper {
             margin-top: 4px;
+            background-color: #fff;
 
             .comment-scroll {
                 height: calc(100vh - 44px); // input-bottom 高度44
+
+                .comment-content {
+                    display: flex;
+                    min-height: 500px;
+                    width: 100%;
+                    align-items: center;
+                    justify-content: center;
+                }
             }
+
         }
 
-        .input-bottom {
+        .bottom-wrapper {
             display: flex;
             position: fixed;
             bottom: 0;
             height: 44px;
 
-            .bottom-wrapper {
+            .input-bottom {
                 display: flex;
                 align-items: center;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
