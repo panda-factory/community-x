@@ -13,10 +13,15 @@
                 </swiper-item>
             </swiper>
 
-            <!-- 标题 -->
             <view class="article-content">
+            <!-- 标题 -->
                 <uni-title type="h1" :title="title"></uni-title>
                 <text>正文</text>
+                <view class="article-foot">
+                    <text>
+                        2023-04-28
+                    </text>
+                </view>
             </view>
         </view>
 
@@ -24,7 +29,9 @@
         <view class="comment-wrapper">
             <scroll-view class="comment-scroll" scroll-y>
                 <view>
-                    <comment-list :commenteds="commenteds"></comment-list>
+                    <uni-section title="评论" type="line">
+                        <comment-list :commenteds="commenteds"></comment-list>
+                    </uni-section>
                 </view>
             </scroll-view>
         </view>
@@ -122,11 +129,16 @@
             }
 
             .article-content {
-                padding: 0px 24px;
+                padding: 16px;
+            }
+            
+            .article-foot {
+                
             }
         }
 
         .comment-wrapper {
+            margin-top: 4px;
 
             .comment-scroll {
                 height: calc(100vh - 44px); // input-bottom 高度44

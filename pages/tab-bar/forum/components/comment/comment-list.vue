@@ -1,12 +1,10 @@
 <template>
     <view class="container">
-        <uni-section title="评论" type="line">
             <uni-list v-for="(commented, index) in commenteds" :key="index">
                 <comment-item :title="commented.comment.nickname" :note="commented.comment.comment" showArrow
                     :thumb="commented.comment.avatar_file.url"
                     thumb-size="base" rightText="默认" />
             </uni-list>
-        </uni-section>
     </view>
 </template>
 
