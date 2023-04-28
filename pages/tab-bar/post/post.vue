@@ -40,9 +40,13 @@
     import {
         getFormattedDate
     } from 'common/js/date';
+    
+    import userInfoMixin from '@/common/mixin/user-info.js'
+    
     let cloudPost = uniCloud.importObject('post');
     let cxId = uniCloud.importObject('cx-id');
     export default {
+        mixins: [userInfoMixin],
         data() {
             return {
                 title: '',
@@ -56,16 +60,17 @@
 
             }
         },
+        onShow() {
+          console.log('gzx post onshow: ' + JSON.stringify(this.userInfo))
+        },
         methods: {
             onTitleInput: function(event) {
                 this.title = event.detail.value;
             },
             async submit() {
-                console.log('gzx submit imageUrls: ' + JSON.stringify(getApp().globalData.userInfo))
-
 
                 let data = {
-                    userId: getApp().globalData.userInfo._id,
+                    userId: this.userInfo._id,
                     title: this.title,
                     imageUrls: [],
                     dateTime: getFormattedDate(),

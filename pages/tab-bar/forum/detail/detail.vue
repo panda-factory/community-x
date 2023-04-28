@@ -96,7 +96,7 @@
             async sendComment() {
                 let commentBanner = {
                     postId: '6443c5ece1a35c371bbfcecb', // this.bannerId,
-                    userId: '6437ff7de1a35cf99fb7c289', // getApp().globalData.userInfo._id,
+                    userId: '6437ff7de1a35cf99fb7c289', // this.userInfo._id,
                     comment: this.commentInput,
                     commentedId: -1
                 }

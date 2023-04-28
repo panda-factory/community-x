@@ -2,7 +2,8 @@
     <view class="container">
         <view class="tabs">
             <!-- <uni-icons class="tabbar" type="plus-filled" color="#007aff" size="30" @click="publish"></uni-icons> -->
-            <uni-segmented-control class="tabbar-first" style="width: 200rpx;" :current="topTabIndex" :values="tabbars" style-type="text" />
+            <uni-segmented-control class="tabbar-first" style="width: 200rpx;" :current="topTabIndex" :values="tabbars"
+                style-type="text" />
             <uni-icons class="tabbar-last" type="plus-filled" color="#007aff" size="30" @click="publish"></uni-icons>
         </view>
         <scroll-view id="tab-bar" class="scroll-h" scroll-x="true" :show-scrollbar="false"
@@ -18,8 +19,7 @@
         <swiper class="swiper-box" :current="tabIndex" @change="onTabChange">
             <swiper-item class="swiper-item" style="height:100vh;" v-for="(tab,index1) in category" :key="index1">
                 <scroll-view class="scroll-v" scroll-y>
-                    <view class="media-wrapper" v-for="(newsItem,index2) in newsList"
-                        :key="index2">
+                    <view class="media-wrapper" v-for="(newsItem,index2) in newsList" :key="index2">
                         <media-card :options="newsItem"> </media-card>
                     </view>
                 </scroll-view>
@@ -59,7 +59,13 @@
                 scrollInto: "",
             }
         },
-        onShow() {
+        onShow() {            
+            if (getApp().globalData.loginStatus !== 'success') {
+                console.log('gzx forum show 1: ')
+                uni.navigateTo({
+                    url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd"
+                })
+            }
             cloudPost.getTop().then((res) => {
                 console.log(res)
                 this.newsList = res.data
@@ -110,6 +116,7 @@
         .tabbar-first {
             margin-left: 36%;
         }
+
         .tabbar-last {
             // margin-left: auto;
         }

@@ -2,17 +2,22 @@
     import uniIdPageInit from '@/uni_modules/uni-id-pages/init.js';
     export default {
         globalData: {
-            userInfo: {}
+            loginStatus: ''
         },
         onLaunch: function() {
             console.warn('当前组件仅支持 uni_modules 目录结构 ，请升级 HBuilderX 到 3.1.0 版本以上！')
             console.log('App Launch')
             uniIdPageInit();
-            
+
+            uni.$on('uni-id-pages-login-success', function() {
+                getApp().globalData.loginStatus = 'success';
+                console.log('监听到事件来自 uni-id-pages-login-success');
+            })
 
         },
         onShow: function() {
             console.log('App Show')
+
         },
         onHide: function() {
             console.log('App Hide')

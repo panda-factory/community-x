@@ -31,8 +31,7 @@
 <script>
     const uniIdCo = uniCloud.importObject('uni-id-co');
     import {
-        store,
-        mutations
+        store
     } from '@/uni_modules/uni-id-pages/common/store.js'
     export default {
         data() {
@@ -98,8 +97,6 @@
             }
         },
         onShow() {
-            getApp().globalData.userInfo = store.userInfo;
-            console.log('gzx mine onshow: ' + JSON.stringify(getApp().globalData.userInfo))
         }
     }
 </script>
