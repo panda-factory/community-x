@@ -138,6 +138,7 @@ module.exports = {
             commented.comment = await formatCommentReturn(commented.comment);
             return commented;
         }));
+        post.authorInfo = await getUserInfo(post.userId);
         post.commenteds = commenteds;
         return post;
     },
@@ -169,4 +170,16 @@ async function formatCommentReturn(comment) {
     comment.nickname = userInfo.nickname;
     comment.avatar_file = userInfo.avatar_file;
     return comment;
+}
+
+async function getUserInfo(userId) {
+    let rawUserData = await userDatas.doc(userId).get();
+    let userInfo = rawUserData.data[0];
+    console.log('gzx getUserInfo: ' + JSON.stringify(userInfo))
+    let result = {};
+    
+    result.nickname = userInfo.nickname;
+    result.avatar_file = userInfo.avatar_file;
+    
+    return result;
 }

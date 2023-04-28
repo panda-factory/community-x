@@ -2,7 +2,7 @@
     <view class="container">
         <view class="article-wrapper">
             <view class="article-author">
-                <cx-avatar></cx-avatar>
+                <cx-avatar :nickname="article.authorInfo.nickname" :avatarUrl="article.authorInfo.avatar_file.url"></cx-avatar>
             </view>
             <!-- 图片 -->
             <swiper class="swiper-box" indicator-dots="true">
@@ -67,6 +67,7 @@
                 commentInput: '',
                 commenteds: [],
                 article: {
+                    authorInfo: undefined,
                     dateTime: ''
                 }
             }
@@ -83,6 +84,7 @@
                 console.log('gzx detail onLoad cloudPost.getDetail: ' + JSON.stringify(result));
                 this.commenteds = result.commenteds;
                 this.article.dateTime = result.dateTime;
+                this.article.authorInfo = result.authorInfo;
             })
         },
         onShareAppMessage() {

@@ -59,9 +59,9 @@
                 scrollInto: "",
             }
         },
-        onShow() {            
+        onShow() {          
+            console.log('gzx forum show : ' + getApp().globalData.loginStatus)  
             if (getApp().globalData.loginStatus !== 'success') {
-                console.log('gzx forum show 1: ')
                 uni.navigateTo({
                     url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd"
                 })
