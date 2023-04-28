@@ -1,30 +1,42 @@
 <template>
     <view class="container">
-        <scroll-view scroll-y style="height: calc(100vh - 100rpx);">
-            <cx-avatar></cx-avatar>
+        <view class="article-wrapper">
+            <view class="article-author">
+                <cx-avatar></cx-avatar>
+            </view>
             <!-- 图片 -->
             <swiper class="swiper-box" indicator-dots="true">
                 <swiper-item class="swiper-item" v-for="(imageUrl, index) in imageUrls" :key="index">
-                    <view class="swiper-item--image">
-                        <image class="swiper-item--image" :src="imageUrl" mode="widthFix"></image>
+                    <view class="swiper-item-img">
+                        <image :src="imageUrl" mode="aspectFit"></image>
                     </view>
                 </swiper-item>
             </swiper>
 
             <!-- 标题 -->
-            <view>
-                <uni-title type="h2" :title="title"></uni-title>
+            <view class="article-content">
+                <uni-title type="h1" :title="title"></uni-title>
+                <text>正文</text>
             </view>
+        </view>
 
-            <!-- 评论区 -->
-            <view>
-                <comment-list :commenteds="commenteds"></comment-list>
+        <!-- 评论区 -->
+        <view class="comment-wrapper">
+            <scroll-view class="comment-scroll" scroll-y>
+                <view>
+                    <comment-list :commenteds="commenteds"></comment-list>
+                </view>
+            </scroll-view>
+        </view>
+
+
+        <view class="input-bottom">
+            <view class="bottom-wrapper">
+                <uni-easyinput class="input" suffixIcon="paperplane" v-model="commentInput" placeholder="评论"
+                    @iconClick="sendComment" />
+
+                <uni-icons type="heart"></uni-icons>
             </view>
-        </scroll-view>
-
-        <view class="input-box">
-            <uni-easyinput class="input" suffixIcon="paperplane" v-model="commentInput" placeholder="评论"
-                @iconClick="sendComment" />
         </view>
     </view>
 </template>
@@ -90,37 +102,49 @@
     .container {
         display: flex;
         flex-direction: column;
-        // height: 100vh;
-    }
 
-    .swiper-box {
-        // height: auto;
-        height: 400px;
-
-        .swiper-item {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .article-wrapper {
             background-color: #fff;
 
-            .swiper-item--image {
+            .article-author {}
+
+            .swiper-box {
+                height: 300px;
+
+                .swiper-item {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    height: 250px;
+
+                    .swiper-item-img {}
+                }
+            }
+
+            .article-content {
+                padding: 0px 24px;
             }
         }
-    }
 
-    .input-box {
-        position: fixed;
-        bottom: 0;
-        align-items: center;
-        width: 100%;
-        padding: 10px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
+        .comment-wrapper {
 
-        .input {
-            width: calc(100% - 20px);
-            border-radius: 10px;
+            .comment-scroll {
+                height: calc(100vh - 44px); // input-bottom 高度44
+            }
+        }
+
+        .input-bottom {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            height: 44px;
+
+            .bottom-wrapper {
+                display: flex;
+                align-items: center;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+            }
         }
     }
 </style>
