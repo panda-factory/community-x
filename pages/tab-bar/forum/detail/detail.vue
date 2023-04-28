@@ -18,8 +18,8 @@
                 <uni-title type="h1" :title="title"></uni-title>
                 <text>正文</text>
                 <view class="article-foot">
-                    <text>
-                        2023-04-28
+                    <text class="cx-foot-node">
+                        {{article.dateTime}}
                     </text>
                 </view>
             </view>
@@ -65,7 +65,10 @@
                 imageUrls: [],
                 title: '',
                 commentInput: '',
-                commenteds: []
+                commenteds: [],
+                article: {
+                    dateTime: ''
+                }
             }
         },
         onLoad(options) {
@@ -79,6 +82,7 @@
             cloudPost.getDetail(this.bannerId).then(result => {
                 console.log('gzx detail onLoad cloudPost.getDetail: ' + JSON.stringify(result));
                 this.commenteds = result.commenteds;
+                this.article.dateTime = result.dateTime;
             })
         },
         onShareAppMessage() {
@@ -130,10 +134,12 @@
             }
 
             .article-content {
-                padding: 16px;
+                padding: 0 16px;
             }
 
-            .article-foot {}
+            .article-foot {
+                padding: 16px 0;
+            }
         }
 
         .comment-wrapper {
