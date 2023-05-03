@@ -1,8 +1,9 @@
 <template>
     <view class="container">
         <view class="article-wrapper">
-            <view class="article-author">
-                <cx-avatar :nickname="article.authorInfo.nickname" :avatarUrl="article.authorInfo.avatar_file.url"></cx-avatar>
+            <view v-if="article.authorInfo" class="article-author">
+                <cx-avatar :nickname="article.authorInfo.nickname"
+                    :avatarUrl="article.authorInfo.avatar_file.url"></cx-avatar>
             </view>
             <!-- 图片 -->
             <swiper class="swiper-box" indicator-dots="true">
@@ -29,9 +30,20 @@
         <view class="comment-wrapper">
             <scroll-view class="comment-scroll" scroll-y>
                 <uni-section title="评论" type="line">
-                    <view class="comment-content">
-                        <comment-list v-if="commenteds.length!==0" :commenteds="commenteds"></comment-list>
-                        <text v-else class="cx-foot-node">评论点什么吧</text>
+                    <uni-list v-if="commenteds.length!==0">
+                        <block v-for="(commented, index) in commenteds" :key="index">
+                            <uni-list-item>
+                                <template v-slot:header>
+                                    <cx-avatar :nickname="commented.comment.nickname" :note="commented.comment.comment">
+                                    </cx-avatar>
+                                </template>
+
+                            </uni-list-item>
+                        </block>
+
+                    </uni-list>
+                    <view v-else class="comment-placeholder">
+                        <text class="cx-foot-node">评论点什么吧</text>
                     </view>
                 </uni-section>
             </scroll-view>
@@ -52,12 +64,14 @@
 <script>
     import commentList from '@/pages/tab-bar/forum/components/comment/comment-list.vue'
     import cxAvatar from '@/components/avatar/avatar.vue'
+    import userInfoMixin from '@/common/mixin/user-info.js'
     let cloudPost = uniCloud.importObject('post');
     export default {
         components: {
             commentList,
             cxAvatar
         },
+        mixins: [userInfoMixin],
         data() {
             return {
                 inputParams: '',
@@ -74,18 +88,20 @@
         },
         onLoad(options) {
             console.log('gzx detail onLoad: ' + options.data);
-            this.inputParams = options.data;
-            let data = JSON.parse(decodeURIComponent(options.data));
-            this.bannerId = data._id;
-            this.imageUrls = data.imageUrls;
-            this.title = data.title;
+            if (options.data) {
+                this.inputParams = options.data;
+                let data = JSON.parse(decodeURIComponent(options.data));
+                this.bannerId = data._id;
+                this.imageUrls = data.imageUrls;
+                this.title = data.title;
 
-            cloudPost.getDetail(this.bannerId).then(result => {
-                console.log('gzx detail onLoad cloudPost.getDetail: ' + JSON.stringify(result));
-                this.commenteds = result.commenteds;
-                this.article.dateTime = result.dateTime;
-                this.article.authorInfo = result.authorInfo;
-            })
+                cloudPost.getDetail(this.bannerId).then(result => {
+                    console.log('gzx detail onLoad cloudPost.getDetail: ' + JSON.stringify(result));
+                    this.commenteds = result.commenteds;
+                    this.article.dateTime = result.dateTime;
+                    this.article.authorInfo = result.authorInfo;
+                })
+            }
         },
         onShareAppMessage() {
             return {
@@ -96,9 +112,10 @@
         },
         methods: {
             async sendComment() {
+                console.log('gzx begin sendComment')
                 let commentBanner = {
-                    postId: '6443c5ece1a35c371bbfcecb', // this.bannerId,
-                    userId: '6437ff7de1a35cf99fb7c289', // this.userInfo._id,
+                    postId: this.bannerId,
+                    userId: this.userInfo._id,
                     comment: this.commentInput,
                     commentedId: -1
                 }
@@ -151,12 +168,13 @@
             .comment-scroll {
                 height: calc(100vh - 44px); // input-bottom 高度44
 
-                .comment-content {
+                .comment-placeholder {
                     display: flex;
                     min-height: 500px;
                     width: 100%;
                     align-items: center;
                     justify-content: center;
+
                 }
             }
 
