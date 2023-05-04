@@ -34,14 +34,29 @@
                         <block v-for="(commented, index) in commenteds" :key="index">
                             <uni-list-item>
                                 <template v-slot:header>
-                                    <cx-avatar>
-                                        <view style="display: flex; flex-direction: column;">
-                                            <text class="cx-foot-node">{{ commented.comment.nickname }}</text>
-                                            <text class="cx-desc-text">{{ commented.comment.comment }}</text>
-                                        </view>
-                                    </cx-avatar>
+                                    <view>
+                                        <cx-avatar>
+                                            <view style="display: flex; flex-direction: column;">
+                                                <text class="cx-foot-node">{{ commented.comment.nickname }}</text>
+                                                <text class="cx-desc-text">{{ commented.comment.comment }}</text>
+                                            </view>
+                                        </cx-avatar>
+                                        <uni-list style="margin-left: 40px;">
+                                            <uni-list-item>
+                                                <template v-slot:header>
+                                                    <cx-avatar avatar-size="small">
+                                                        <view style="display: flex; flex-direction: column;">
+                                                            <text
+                                                                class="cx-foot-node">{{ commented.comment.nickname }}</text>
+                                                            <text
+                                                                class="cx-desc-text">{{ commented.comment.comment }}</text>
+                                                        </view>
+                                                    </cx-avatar>
+                                                </template>
+                                            </uni-list-item>
+                                        </uni-list>
+                                    </view>
                                 </template>
-
                             </uni-list-item>
                         </block>
 
