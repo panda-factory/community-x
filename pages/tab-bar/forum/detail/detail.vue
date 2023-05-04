@@ -34,7 +34,11 @@
                         <block v-for="(commented, index) in commenteds" :key="index">
                             <uni-list-item>
                                 <template v-slot:header>
-                                    <cx-avatar :nickname="commented.comment.nickname" :note="commented.comment.comment">
+                                    <cx-avatar>
+                                        <view style="display: flex; flex-direction: column;">
+                                            <text class="cx-foot-node">{{ commented.comment.nickname }}</text>
+                                            <text class="cx-desc-text">{{ commented.comment.comment }}</text>
+                                        </view>
                                     </cx-avatar>
                                 </template>
 

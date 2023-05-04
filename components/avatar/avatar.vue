@@ -11,8 +11,10 @@
 
         <!-- 昵称 -->
         <view class="nickname-wrapper">
-            <text class="cx-desc-text" v-if="nickname">{{ nickname }}</text>
-            <text class="cx-foot-node" v-if="note">{{ note }}</text>
+            <slot>
+                <text class="cx-desc-text" v-if="nickname">{{ nickname }}</text>
+                <text class="cx-foot-node" v-if="note">{{ note }}</text>
+            </slot>
         </view>
     </view>
 </template>
