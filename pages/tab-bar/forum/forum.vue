@@ -44,9 +44,6 @@
                             </template>
                         </uni-card>
                     </block>
-                    <view class="media-wrapper" v-for="(newsItem,index2) in newsList" :key="index2">
-                        <media-card :options="newsItem"> </media-card>
-                    </view>
                 </scroll-view>
             </swiper-item>
         </swiper>
@@ -58,7 +55,6 @@
     import {
         getFormattedDate
     } from 'common/js/date';
-    import mediaCard from './components/media-card/media-card.vue';
     import cxAvatar from '@/components/avatar/avatar.vue'
 
     let cloudPost = uniCloud.importObject('post');
@@ -70,7 +66,6 @@
 
     export default {
         components: {
-            mediaCard,
             cxAvatar
         },
         data() {
@@ -97,11 +92,6 @@
                     url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd"
                 })
             }
-            cloudPost.getTop().then((res) => {
-                console.log(res)
-                this.newsList = res.data
-            })
-            console.log('gzx onShow 1')
             this.getNews();
         },
         methods: {
@@ -238,6 +228,4 @@
         height: 100%;
         flex-direction: column;
     }
-
-    .media-wrapper {}
 </style>
