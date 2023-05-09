@@ -1,11 +1,11 @@
 <template>
     <view class="cx-container">
-        <uni-notice-bar show-icon scrollable text="提醒：请勿发布广告、涉政、涉黄、涉暴以及侵犯他人合法权益的言论。共同遵守社区文明公约，讨论事情对事不对人，不欢迎人身攻击。"/>
+        <uni-notice-bar show-icon scrollable text="提醒：请勿发布广告、涉政、涉黄、涉暴以及侵犯他人合法权益的言论。共同遵守社区文明公约，讨论事情对事不对人，不欢迎人身攻击。" />
 
         <view class="text-content">
             <uni-easyinput v-model="title" :inputBorder="false" placeholder="填写标题"
                 :placeholderStyle="placeholderStyle"></uni-easyinput>
-            <uni-easyinput v-model="description" :inputBorder="false" placeholder="和大家分享点什么......"></uni-easyinput>
+            <uni-easyinput v-model="content" :inputBorder="false" placeholder="和大家分享点什么......"></uni-easyinput>
 
         </view>
         <uni-file-picker v-model="imageUrls" ref="selectedFiles" :auto-upload="false" limit="9"></uni-file-picker>
@@ -23,7 +23,7 @@
                         <uni-icons type="auth"></uni-icons>
                     </template>
                     <template v-slot:footer>
-                        <switch checked style="height: 30rpx;transform:scale(0.6) ;"/>
+                        <switch checked style="height: 30rpx;transform:scale(0.6) ;" />
                     </template>
                 </uni-list-item>
             </uni-list>
@@ -40,9 +40,9 @@
     import {
         getFormattedDate
     } from 'common/js/date';
-    
+
     import userInfoMixin from '@/common/mixin/user-info.js'
-    
+
     let cloudPost = uniCloud.importObject('post');
     let cxId = uniCloud.importObject('cx-id');
     export default {
@@ -50,7 +50,7 @@
         data() {
             return {
                 title: '',
-                description: '',
+                content: '',
                 imageUrls: [],
                 imageOptions: {
                     filePath: '',
@@ -61,33 +61,50 @@
             }
         },
         onShow() {
-          console.log('gzx post onshow: ' + JSON.stringify(this.userInfo))
+            console.log('gzx post onshow: ' + JSON.stringify(this.userInfo))
         },
         methods: {
             onTitleInput: function(event) {
                 this.title = event.detail.value;
             },
             async submit() {
-
-                let data = {
-                    userId: this.userInfo._id,
-                    title: this.title,
-                    imageUrls: [],
-                    dateTime: getFormattedDate(),
-                };
-
-
+                const db = uniCloud.database();
+                
+                let thumbs = [];
                 await this.$refs.selectedFiles.upload();
-
-                console.log('gzx submit 2: ' + this.imageUrls.length)
-                console.log('gzx submit 3: ' + JSON.stringify(this.imageUrls))
                 this.imageUrls.forEach(element => {
-                    data.imageUrls.push(element.fileID);
+                    thumbs.push(element.fileID);
                 })
+                
+                db.collection('cx-news-articles').add({
+                    title: this.title,
+                    content: this.content,
+                    thumbs: thumbs
+				}).then((res) => {
+					// res 为数据库查询结果
+					console.log('submit res: ' + JSON.stringify(res))
+				}).catch((err) => {
+					console.error(err.message)
+				});
+                // let data = {
+                //     userId: this.userInfo._id,
+                //     title: this.title,
+                //     imageUrls: [],
+                //     dateTime: getFormattedDate(),
+                // };
 
-                console.log('gzx submit data: ' + JSON.stringify(data))
-                let result = await cloudPost.submit(data);
-                console.log('gzx submit result: ' + JSON.stringify(result))
+
+                // await this.$refs.selectedFiles.upload();
+
+                // console.log('gzx submit 2: ' + this.imageUrls.length)
+                // console.log('gzx submit 3: ' + JSON.stringify(this.imageUrls))
+                // this.imageUrls.forEach(element => {
+                //     data.imageUrls.push(element.fileID);
+                // })
+
+                // console.log('gzx submit data: ' + JSON.stringify(data))
+                // let result = await cloudPost.submit(data);
+                // console.log('gzx submit result: ' + JSON.stringify(result))
             }
         }
     }

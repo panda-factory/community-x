@@ -19,6 +19,31 @@
         <swiper class="swiper-box" :current="tabIndex" @change="onTabChange">
             <swiper-item class="swiper-item" style="height:100vh;" v-for="(tab,index1) in category" :key="index1">
                 <scroll-view class="scroll-v" scroll-y>
+                    <block v-for="(article,index3) in articleList" :key="index3">
+                        <uni-card>
+                            <template v-slot:title>
+                                <cx-avatar :note="article.last_modify_date"></cx-avatar>
+                            </template>
+                            <image style="width: 100%;" :src="article.thumbs[0]"></image>
+                            <text>{{ article.content }}</text>
+                            <template v-slot:actions>
+                                <view slot="actions" class="card-actions">
+                                    <view class="card-actions-item" @click="actionsClick('分享')">
+                                        <uni-icons type="redo" size="18" color="#999"></uni-icons>
+                                        <text class="card-actions-item-text">分享</text>
+                                    </view>
+                                    <view class="card-actions-item" @click="actionsClick('点赞')">
+                                        <uni-icons type="heart" size="18" color="#999"></uni-icons>
+                                        <text class="card-actions-item-text">点赞</text>
+                                    </view>
+                                    <view class="card-actions-item" @click="actionsClick('评论')">
+                                        <uni-icons type="chatbubble" size="18" color="#999"></uni-icons>
+                                        <text class="card-actions-item-text">评论</text>
+                                    </view>
+                                </view>
+                            </template>
+                        </uni-card>
+                    </block>
                     <view class="media-wrapper" v-for="(newsItem,index2) in newsList" :key="index2">
                         <media-card :options="newsItem"> </media-card>
                     </view>
@@ -30,7 +55,11 @@
 </template>
 
 <script>
+    import {
+        getFormattedDate
+    } from 'common/js/date';
     import mediaCard from './components/media-card/media-card.vue';
+    import cxAvatar from '@/components/avatar/avatar.vue'
 
     let cloudPost = uniCloud.importObject('post');
 
@@ -41,11 +70,13 @@
 
     export default {
         components: {
-            mediaCard
+            mediaCard,
+            cxAvatar
         },
         data() {
             return {
                 newsList: [],
+                articleList: [],
                 tabbars: ['关注', '广场'],
                 topTabIndex: 1,
                 tabIndex: 0,
@@ -59,8 +90,8 @@
                 scrollInto: "",
             }
         },
-        onShow() {          
-            console.log('gzx forum show : ' + getApp().globalData.loginStatus)  
+        onShow() {
+            console.log('gzx forum show : ' + getApp().globalData.loginStatus)
             if (getApp().globalData.loginStatus !== 'success') {
                 uni.navigateTo({
                     url: "/uni_modules/uni-id-pages/pages/login/login-withoutpwd"
@@ -70,6 +101,8 @@
                 console.log(res)
                 this.newsList = res.data
             })
+            console.log('gzx onShow 1')
+            this.getNews();
         },
         methods: {
             onTabChange(e) {
@@ -89,6 +122,19 @@
                         console.log('gzx fail: ' + JSON.stringify(e))
                     }
                 })
+            },
+            getNews() {
+                const db = uniCloud.database();
+                db.collection('cx-news-articles').limit(10).get().then((dataPacket) => {
+                    this.articleList = dataPacket.result.data;
+                    this.articleList.forEach(item => {
+                        item.publish_date = getFormattedDate(item.publish_date);
+                        item.last_modify_date = getFormattedDate(item.last_modify_date);
+                    })
+                    console.log('gzx getNews: ' + JSON.stringify(this.articleList));
+                }).catch((err) => {
+                    console.error(err.message)
+                });
             }
         }
     }
@@ -131,6 +177,28 @@
     .swiper-item {
         flex: 1;
         flex-direction: row;
+    }
+
+
+    .card-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: 45px;
+        border-top: 1px #eee solid;
+
+        .card-actions-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .card-actions-item-text {
+                font-size: 12px;
+                color: #666;
+                margin-left: 5px;
+            }
+        }
     }
 
     .uni-tab-item {

@@ -1,5 +1,5 @@
-export const getFormattedDate = (): string => {
-  const date = new Date();
+export const getFormattedDate = (timestamp: number): string => {
+  const date = timestamp ? new Date(timestamp) : new Date();
   const year = date.getFullYear();
   const month = ('0' + (date.getMonth() + 1)).slice(-2);
   const day = ('0' + date.getDate()).slice(-2);
