@@ -162,6 +162,18 @@ module.exports = {
         });
         return;
     },
+
+    async getUserInfo(userId) {
+        let rawUserData = await userDatas.doc(userId).get();
+        let userInfo = rawUserData.data[0];
+        console.log('gzx getUserInfo: ' + JSON.stringify(userInfo))
+        let result = {};
+        
+        result.nickname = userInfo.nickname;
+        result.avatar_file = userInfo.avatar_file;
+        
+        return result;
+    }
 }
 
 async function formatCommentReturn(comment) {
@@ -170,16 +182,4 @@ async function formatCommentReturn(comment) {
     comment.nickname = userInfo.nickname;
     comment.avatar_file = userInfo.avatar_file;
     return comment;
-}
-
-async function getUserInfo(userId) {
-    let rawUserData = await userDatas.doc(userId).get();
-    let userInfo = rawUserData.data[0];
-    console.log('gzx getUserInfo: ' + JSON.stringify(userInfo))
-    let result = {};
-    
-    result.nickname = userInfo.nickname;
-    result.avatar_file = userInfo.avatar_file;
-    
-    return result;
 }

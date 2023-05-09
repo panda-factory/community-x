@@ -55,7 +55,7 @@
     import {
         getFormattedDate
     } from 'common/js/date';
-    import cxAvatar from '@/components/avatar/avatar.vue'
+    import cxAvatar from '@/components/avatar/avatar.vue';
 
     let cloudPost = uniCloud.importObject('post');
 
@@ -120,6 +120,11 @@
                     this.articleList.forEach(item => {
                         item.publish_date = getFormattedDate(item.publish_date);
                         item.last_modify_date = getFormattedDate(item.last_modify_date);
+                        cloudPost.getUserInfo(item.user_id).then((dataPacket) => {
+                            console.log(JSON.stringify(dataPacket))
+                        }).catch((err) => {
+                            console.error(err.message)
+                        });
                     })
                     console.log('gzx getNews: ' + JSON.stringify(this.articleList));
                 }).catch((err) => {
