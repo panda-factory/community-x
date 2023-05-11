@@ -19,10 +19,11 @@
         <swiper class="swiper-box" :current="tabIndex" @change="onTabChange">
             <swiper-item class="swiper-item" style="height:100vh;" v-for="(tab,index1) in category" :key="index1">
                 <scroll-view class="scroll-v" scroll-y>
-                    <block v-for="(article,index3) in articleList" :key="index3">
+                    <block v-for="(article, index2) in articleList" :key="index2">
                         <uni-card>
                             <template v-slot:title>
-                                <cx-avatar :note="article.last_modify_date"></cx-avatar>
+                                <cx-avatar :nickname="article.authorInfo.nickname"
+                                    :note="article.last_modify_date"></cx-avatar>
                             </template>
                             <image style="width: 100%;" :src="article.thumbs[0]"></image>
                             <text>{{ article.content }}</text>
@@ -70,7 +71,6 @@
         },
         data() {
             return {
-                newsList: [],
                 articleList: [],
                 tabbars: ['关注', '广场'],
                 topTabIndex: 1,
@@ -114,17 +114,11 @@
                 })
             },
             getNews() {
-                const db = uniCloud.database();
-                db.collection('cx-news-articles').limit(10).get().then((dataPacket) => {
-                    this.articleList = dataPacket.result.data;
+                cloudPost.getTop().then(packet => {
+                    this.articleList = packet;
                     this.articleList.forEach(item => {
                         item.publish_date = getFormattedDate(item.publish_date);
                         item.last_modify_date = getFormattedDate(item.last_modify_date);
-                        cloudPost.getUserInfo(item.user_id).then((dataPacket) => {
-                            console.log(JSON.stringify(dataPacket))
-                        }).catch((err) => {
-                            console.error(err.message)
-                        });
                     })
                     console.log('gzx getNews: ' + JSON.stringify(this.articleList));
                 }).catch((err) => {

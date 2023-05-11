@@ -108,19 +108,28 @@ module.exports = {
      * @returns {object} 返回值描述
      */
     async getTop() {
-        let topData = await postData.limit(10).get()
-        let result = await Promise.all(topData.data.map(async (item) => {
-            console.log('item: ' + JSON.stringify(item));
-            let data = await userDatas.where({
-                _id: item.userId
+        let dataPacket = await db.collection('cx-news-articles').limit(10).get();
+        let articleList = dataPacket.data;
+
+        let authorInfoList = await Promise.all(articleList.map(async (article) => {
+            console.log('article: ' + JSON.stringify(article));
+            let userInfoPacket = await userDatas.where({
+                _id: article.user_id
             }).get();
-            console.log(JSON.stringify(data));
-            item.nickname = data.data[0].nickname;
-            item.avatar_file = data.data[0].avatar_file;
-            return item;
+            console.log(JSON.stringify(userInfoPacket));
+            let authorInfo = {};
+            authorInfo.nickname = userInfoPacket.data[0].nickname;
+            authorInfo.avatar_file = userInfoPacket.data[0].avatar_file;
+            return authorInfo;
         }))
-        console.log('gzx Cloud: ' + JSON.stringify(result));
-        return topData;
+        console.log('gzx getTop authorInfoList: ' + JSON.stringify(authorInfoList));
+
+        authorInfoList.forEach((authorInfo, index) => {
+            articleList[index].authorInfo = authorInfo;
+        });
+        
+        console.log('gzx getTop: ' + JSON.stringify(articleList));
+        return articleList;
     },
 
     /**
