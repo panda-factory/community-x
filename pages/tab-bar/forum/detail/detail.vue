@@ -3,11 +3,11 @@
         <view class="article-wrapper">
             <view v-if="article.authorInfo" class="article-author">
                 <cx-avatar :nickname="article.authorInfo.nickname"
-                    :avatarUrl="article.authorInfo.avatar_file.url"></cx-avatar>
+                    :avatarUrl='article.authorInfo.avatar_file ? article.authorInfo.avatar_file.url : ""'></cx-avatar>
             </view>
             <!-- 图片 -->
             <swiper class="swiper-box" indicator-dots="true">
-                <swiper-item class="swiper-item" v-for="(imageUrl, index) in imageUrls" :key="index">
+                <swiper-item class="swiper-item" v-for="(imageUrl, index) in article.thumbs" :key="index">
                     <view class="swiper-item-img">
                         <image :src="imageUrl" mode="aspectFit"></image>
                     </view>
@@ -16,11 +16,11 @@
 
             <view class="article-content">
                 <!-- 标题 -->
-                <uni-title type="h1" :title="title"></uni-title>
-                <text>正文</text>
+                <uni-title type="h1" :title="article.title"></uni-title>
+                <text>{{ article.content }} </text>
                 <view class="article-foot">
                     <text class="cx-foot-node">
-                        {{article.dateTime}}
+                        {{article.last_modify_date}}
                     </text>
                 </view>
             </view>
@@ -99,26 +99,18 @@
                 title: '',
                 commentInput: '',
                 commenteds: [],
-                article: {
-                    authorInfo: undefined,
-                    dateTime: ''
-                }
+                article: {}
             }
         },
         onLoad(options) {
             console.log('gzx detail onLoad: ' + options.data);
             if (options.data) {
                 this.inputParams = options.data;
-                let data = JSON.parse(decodeURIComponent(options.data));
-                this.bannerId = data._id;
-                this.imageUrls = data.imageUrls;
-                this.title = data.title;
+                let articleId = decodeURIComponent(options.data);
 
-                cloudPost.getDetail(this.bannerId).then(result => {
+                cloudPost.getDetail(articleId).then(result => {
                     console.log('gzx detail onLoad cloudPost.getDetail: ' + JSON.stringify(result));
-                    this.commenteds = result.commenteds;
-                    this.article.dateTime = result.dateTime;
-                    this.article.authorInfo = result.authorInfo;
+                    this.article = result;
                 })
             }
         },

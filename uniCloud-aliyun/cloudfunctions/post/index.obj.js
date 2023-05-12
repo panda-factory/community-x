@@ -138,18 +138,20 @@ module.exports = {
      * @returns {object} 返回值描述
      */
     async getDetail(id) {
-        let postRawData = await postData.doc(id).get();
-        let post = postRawData.data[0];
-        console.log('gzx Cloud getDetail: ' + JSON.stringify(post));
+        let dataPacket = await db.collection('cx-news-articles').doc(id).get();
+        let article = dataPacket.data[0];
+        console.log('gzx Cloud getDetail: ' + JSON.stringify(article));
 
-        delete post._id;
-        const commenteds = await Promise.all(post.commenteds.map(async (commented) => {
-            commented.comment = await formatCommentReturn(commented.comment);
-            return commented;
-        }));
-        post.authorInfo = await getUserInfo(post.userId);
-        post.commenteds = commenteds;
-        return post;
+        let userInfoPacket = await userDatas.where({
+            _id: article.user_id
+        }).get();
+        console.log(JSON.stringify(userInfoPacket));
+        let authorInfo = {};
+        authorInfo.nickname = userInfoPacket.data[0].nickname;
+        authorInfo.avatar_file = userInfoPacket.data[0].avatar_file;
+
+        article.authorInfo = authorInfo;
+        return article;
     },
 
     /**

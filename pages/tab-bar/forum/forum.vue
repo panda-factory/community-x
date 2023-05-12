@@ -25,8 +25,10 @@
                                 <cx-avatar :nickname="article.authorInfo.nickname"
                                     :note="article.last_modify_date"></cx-avatar>
                             </template>
-                            <image style="width: 100%;" :src="article.thumbs[0]"></image>
-                            <text>{{ article.content }}</text>
+                            <view @click="goDetail(article._id)">
+                                <image style="width: 100%;" :src="article.thumbs[0]"></image>
+                                <text>{{ article.content }}</text>
+                            </view>
                             <template v-slot:actions>
                                 <view slot="actions" class="card-actions">
                                     <view class="card-actions-item" @click="actionsClick('分享')">
@@ -112,6 +114,12 @@
                         console.log('gzx fail: ' + JSON.stringify(e))
                     }
                 })
+            },
+            goDetail: function(id) {
+                console.log('gzx goDetail')
+                uni.navigateTo({
+                    url: './detail/detail?data=' + encodeURIComponent(id)
+                });
             },
             getNews() {
                 cloudPost.getTop().then(packet => {
