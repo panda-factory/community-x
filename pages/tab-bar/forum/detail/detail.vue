@@ -30,15 +30,15 @@
         <view class="comment-wrapper">
             <scroll-view class="comment-scroll" scroll-y>
                 <uni-section title="评论" type="line">
-                    <uni-list v-if="commenteds.length!==0">
-                        <block v-for="(commented, index) in commenteds" :key="index">
+                    <uni-list v-if="comments.length!==0">
+                        <block v-for="(comment, index) in comments" :key="index">
                             <uni-list-item>
                                 <template v-slot:header>
                                     <view>
                                         <cx-avatar>
                                             <view style="display: flex; flex-direction: column;">
-                                                <text class="cx-foot-node">{{ commented.comment.nickname }}</text>
-                                                <text class="cx-desc-text">{{ commented.comment.comment }}</text>
+                                                <text class="cx-foot-node">{{ comment.authorInfo.nickname }}</text>
+                                                <text class="cx-desc-text">{{ comment.comment_content }}</text>
                                             </view>
                                         </cx-avatar>
                                         <uni-list style="margin-left: 40px;">
@@ -47,9 +47,9 @@
                                                     <cx-avatar avatar-size="small">
                                                         <view style="display: flex; flex-direction: column;">
                                                             <text
-                                                                class="cx-foot-node">{{ commented.comment.nickname }}</text>
+                                                                class="cx-foot-node">{{ comment.authorInfo.nickname }}</text>
                                                             <text
-                                                                class="cx-desc-text">{{ commented.comment.comment }}</text>
+                                                                class="cx-desc-text">{{ comment.comment_content }}</text>
                                                         </view>
                                                     </cx-avatar>
                                                 </template>
@@ -59,7 +59,6 @@
                                 </template>
                             </uni-list-item>
                         </block>
-
                     </uni-list>
                     <view v-else class="comment-placeholder">
                         <text class="cx-foot-node">评论点什么吧</text>
@@ -98,7 +97,7 @@
                 imageUrls: [],
                 title: '',
                 commentInput: '',
-                commenteds: [],
+                comments: [],
                 article: {}
             }
         },
@@ -110,7 +109,8 @@
 
                 cloudPost.getDetail(articleId).then(result => {
                     console.log('gzx detail onLoad cloudPost.getDetail: ' + JSON.stringify(result));
-                    this.article = result;
+                    this.article = result.article;
+                    this.comments = result.comments;
                 })
             }
         },
@@ -123,18 +123,23 @@
         },
         methods: {
             async sendComment() {
-                console.log('gzx begin sendComment')
-                let commentBanner = {
-                    postId: this.bannerId,
-                    userId: this.userInfo._id,
-                    comment: this.commentInput,
-                    commentedId: -1
-                }
+                console.log('gzx begin sendComment : ' + JSON.stringify(this.userInfo))
 
-                console.log('gzx sendComment: ' + JSON.stringify(commentBanner))
-                let result = await cloudPost.submitComment(commentBanner);
-                console.log('gzx sendComment result: ' + JSON.stringify(result))
-                this.commenteds = result;
+                const db = uniCloud.database();
+                db.collection('cx-news-comments').add({
+                    article_id: this.article._id,
+                    user_id: this.userInfo._id,
+                    comment_content: this.commentInput,
+                    like_count: 0,
+                    comment_type: 0,
+                    reply_user_id: this.article.user_id,
+                    reply_comment_id: "invalid"
+                }).then((res) => {
+                    // res 为数据库查询结果
+                    console.log('sendComment res: ' + JSON.stringify(res))
+                }).catch((err) => {
+                    console.error(err.message)
+                });
             }
         }
     }

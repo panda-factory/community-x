@@ -1,25 +1,4 @@
-/**
- * postData: {
-     userId: string,
-     title: string,
-     imageUrls: [],
-     dateTime: string,
-     forwardCount: number,
-     commentCount: number,
-     commenteds: [
-         {
-             comment: Comment,
-             commenteds: Comment[]
-         }
-     ],
-     likeCount: number
- }
- * Comment: {
- *    userId: string,
- *    nicknameId: number,
- *    comment: string
- *    }
- */
+
 const db = uniCloud.database();
 const postData = db.collection('post-data')
 const userDatas = db.collection('uni-id-users')
@@ -151,7 +130,9 @@ module.exports = {
         authorInfo.avatar_file = userInfoPacket.data[0].avatar_file;
 
         article.authorInfo = authorInfo;
-        return article;
+
+        let comments = await getComments(id);
+        return {article, comments};
     },
 
     /**
@@ -173,18 +154,31 @@ module.exports = {
         });
         return;
     },
+}
 
-    async getUserInfo(userId) {
-        let rawUserData = await userDatas.doc(userId).get();
-        let userInfo = rawUserData.data[0];
-        console.log('gzx getUserInfo: ' + JSON.stringify(userInfo))
-        let result = {};
-        
-        result.nickname = userInfo.nickname;
-        result.avatar_file = userInfo.avatar_file;
-        
-        return result;
-    }
+async function getUserInfo(userId) {
+    let rawUserData = await userDatas.doc(userId).get();
+    let userInfo = rawUserData.data[0];
+    let result = {};
+    
+    result.nickname = userInfo.nickname;
+    result.avatar_file = userInfo.avatar_file;
+    
+    return result;
+}
+
+async function getComments(articleId) {
+    let dataPacket = await db.collection('cx-news-comments').where({
+        article_id: articleId
+    }).get();
+    let comments = dataPacket.data;
+
+    const commenteds = await Promise.all(comments.map(async (comment) => {
+        comment.authorInfo = await getUserInfo(comment.user_id);
+        return comment;
+    }));
+    console.log('gzx getComments: ' + JSON.stringify(commenteds));
+    return commenteds;
 }
 
 async function formatCommentReturn(comment) {
