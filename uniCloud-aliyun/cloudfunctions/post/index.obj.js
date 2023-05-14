@@ -169,16 +169,27 @@ async function getUserInfo(userId) {
 
 async function getComments(articleId) {
     let dataPacket = await db.collection('cx-news-comments').where({
-        article_id: articleId
+        article_id: articleId,
+        comment_type: 0
     }).get();
     let comments = dataPacket.data;
 
-    const commenteds = await Promise.all(comments.map(async (comment) => {
+    comments = await Promise.all(comments.map(async (comment) => {
+        let commentReply = await db.collection('cx-news-comments').where({
+            article_id: articleId,
+            comment_type: 1,
+            reply_comment_id: comment._id
+        }).get();
+        comment.reply = commentReply.data;
+        return comment;
+    }));
+
+    const newComments = await Promise.all(comments.map(async (comment) => {
         comment.authorInfo = await getUserInfo(comment.user_id);
         return comment;
     }));
-    console.log('gzx getComments: ' + JSON.stringify(commenteds));
-    return commenteds;
+    console.log('gzx getComments: ' + JSON.stringify(newComments));
+    return newComments;
 }
 
 async function formatCommentReturn(comment) {

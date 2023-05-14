@@ -41,7 +41,7 @@
                                                 <text class="cx-desc-text">{{ comment.comment_content }}</text>
                                             </view>
                                         </cx-avatar>
-                                        <uni-list style="margin-left: 40px;">
+                                        <uni-list v-for='(reply, index1) in comment.reply' :key='index1' style="margin-left: 40px;">
                                             <uni-list-item>
                                                 <template v-slot:header>
                                                     <cx-avatar avatar-size="small">
