@@ -32,7 +32,7 @@
                 <uni-section title="评论" type="line">
                     <uni-list v-if="comments.length!==0">
                         <block v-for="(comment, index) in comments" :key="index">
-                            <uni-list-item>
+                            <uni-list-item :clickable="true" @click="replyComment(comment)">
                                 <template v-slot:header>
                                     <view>
                                         <cx-avatar>
@@ -41,15 +41,16 @@
                                                 <text class="cx-desc-text">{{ comment.comment_content }}</text>
                                             </view>
                                         </cx-avatar>
-                                        <uni-list v-for='(reply, index1) in comment.reply' :key='index1' style="margin-left: 40px;">
+                                        <uni-list v-for='(reply, index1) in comment.replys' :key='index1'
+                                            style="margin-left: 40px;">
                                             <uni-list-item>
                                                 <template v-slot:header>
                                                     <cx-avatar avatar-size="small">
                                                         <view style="display: flex; flex-direction: column;">
                                                             <text
-                                                                class="cx-foot-node">{{ comment.authorInfo.nickname }}</text>
+                                                                class="cx-foot-node">{{ reply.authorInfo.nickname }}</text>
                                                             <text
-                                                                class="cx-desc-text">{{ comment.comment_content }}</text>
+                                                                class="cx-desc-text">{{ reply.comment_content }}</text>
                                                         </view>
                                                     </cx-avatar>
                                                 </template>
@@ -70,9 +71,8 @@
 
         <view class="bottom-wrapper">
             <view class="input-bottom">
-                <uni-easyinput class="input" suffixIcon="paperplane" v-model="commentInput" placeholder="评论"
-                    @iconClick="sendComment" />
-
+                <uni-easyinput class="input" suffixIcon="paperplane" v-model="commentInput" :placeholder="placeholder"
+                    @iconClick="submitComment" @blur="onBlur" :focus="showInput" />
                 <uni-icons type="heart" size="25px"></uni-icons>
             </view>
         </view>
@@ -92,19 +92,24 @@
         mixins: [userInfoMixin],
         data() {
             return {
-                inputParams: '',
+                articleId: '',
                 bannerId: '',
                 imageUrls: [],
                 title: '',
                 commentInput: '',
                 comments: [],
-                article: {}
+                article: {},
+                showInput: false,
+                placeholder: '说点什么',
+                replyCommentId: '',
+                replyUserId: '',
+                submitting: false
             }
         },
         onLoad(options) {
             console.log('gzx detail onLoad: ' + options.data);
             if (options.data) {
-                this.inputParams = options.data;
+                this.articleId = options.data;
                 let articleId = decodeURIComponent(options.data);
 
                 cloudPost.getDetail(articleId).then(result => {
@@ -117,29 +122,69 @@
         onShareAppMessage() {
             return {
                 title: this.title,
-                path: '/pages/tab-bar/forum/detail/detail?data=' + this.inputParams,
+                path: '/pages/tab-bar/forum/detail/detail?data=' + this.articleId,
                 imageUrl: this.imageUrls[0]
             }
         },
         methods: {
-            async sendComment() {
-                console.log('gzx begin sendComment : ' + JSON.stringify(this.userInfo))
+            submitComment() {
+                console.log('gzx begin submitComment : ' + JSON.stringify(this.userInfo))
 
+                this.submitting = true;
                 const db = uniCloud.database();
-                db.collection('cx-news-comments').add({
+                console.log('gzx submitComment this.replyUserId: ' + this.replyUserId)
+                const comment = {
                     article_id: this.article._id,
                     user_id: this.userInfo._id,
                     comment_content: this.commentInput,
                     like_count: 0,
-                    comment_type: 0,
-                    reply_user_id: this.article.user_id,
-                    reply_comment_id: "invalid"
-                }).then((res) => {
+                    comment_type: !this.replyCommentId ? 0 : 1,
+                    reply_user_id: !this.replyUserId ? "invalid" : this.replyUserId,
+                    reply_comment_id: !this.replyCommentId ? "invalid" : this.replyCommentId
+                };
+                db.collection('cx-news-comments').add(comment).then((res) => {
                     // res 为数据库查询结果
-                    console.log('sendComment res: ' + JSON.stringify(res))
+                    console.log('submitComment res: ' + JSON.stringify(res))
+                    cloudPost.getDetail(this.article._id).then(result => {
+                        this.comments = result.comments;
+                        console.log('gzx cloudPost.getDetail: ' + JSON.stringify(
+                            this.comments));
+                    })
                 }).catch((err) => {
                     console.error(err.message)
-                });
+                }).finally(() => {
+                    this.commentInput = '';
+                    this.showInput = false;
+                    this.placeholder = '说点什么';
+                    this.replyCommentId = '';
+                    this.replyUserId = '';
+                    this.submitting = false;
+                })
+            },
+            replyComment(comment) {
+                console.log('gzx replyComment: ' + JSON.stringify(comment))
+                cloudPost.getNicknameFromCommentId(comment._id).then(result => {
+                    this.showInput = true;
+                    this.placeholder = '回复 @' + result;
+                    this.replyCommentId = comment._id;
+                    this.replyUserId = comment.user_id;
+                }).finally(() => {
+                    console.log('gzx replyComment this.replyUserId: ' + this.replyUserId)
+                })
+            },
+            onBlur() {
+                setTimeout(() => {
+                    this.clearInput()
+                    }, 0);
+            },
+            clearInput() {
+                if (!this.submitting) {
+                    this.commentInput = '';
+                    this.showInput = false;
+                    this.placeholder = '说点什么';
+                    this.replyCommentId = '';
+                    this.replyUserId = '';
+                }
             }
         }
     }

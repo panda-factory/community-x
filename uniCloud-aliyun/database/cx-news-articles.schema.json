@@ -123,6 +123,10 @@
 				"write": false
 			}
 		},
+		"comments": {
+			"bsonType": "array",
+			"description": "文章评论列表"
+		},
 		"last_comment_user_id": {
 			"bsonType": "string",
 			"description": "最后回复用户 id，参考`uni-id-users` 表",

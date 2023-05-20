@@ -41,44 +41,35 @@ module.exports = {
      * @param {object} banner {postId,userId,value}
      * @returns {object} 返回值描述
      */
-    async submitComment(banner) {
+    async submitComment(comment) {
         // 参数校验，如无参数则不需要
-        if (!banner) {
+        if (!comment) {
             return {
                 errCode: 'PARAM_IS_NULL',
                 errMsg: '参数不能为空'
             }
         }
         // 业务逻辑
-        let rawData = await postData.doc(banner.postId).get();
-        let post = rawData.data[0];
-        let comment = {
-            userId: banner.userId,
-            nicknameId: 0,
-            comment: banner.comment
-        }
-        if (banner.commentedId === -1) {
-            let commented = {
-                comment: comment,
-                commenteds: []
-            };
-            post.commenteds.push(commented);
-            delete post._id;
-            console.log('gzx submitComment: ' + JSON.stringify(post))
-            // 更新数据库
-            await postData.doc(banner.postId).update(post).then(res => {
-                console.log('更新成功：' + res);
-            }).catch(err => {
-                console.error('更新失败：' + err);
-            });
-        }
-        // 返回结果
+        console.log('submitComment comment: ' + JSON.stringify(comment))
+
+        let commentId = await db.collection('cx-news-comments').add(comment);
+        console.log('submitComment result: ' + JSON.stringify(commentId))
         
-        const commenteds = await Promise.all(post.commenteds.map(async (commented) => {
-            commented.comment = await formatCommentReturn(commented.comment);
-            return commented;
-        }));
-        return commenteds;
+
+        const { article_id, reply_comment_id } = comment;
+        console.log('submitComment article_id: ' + article_id)
+        console.log('submitComment reply_comment_id: ' + reply_comment_id)
+        if (reply_comment_id === 'invalid') {
+            let dataPacket = await db.collection('cx-news-articles').doc(article_id).get();
+            console.log('submitComment dataPacket: ' + JSON.stringify(dataPacket))
+            let comments = !dataPacket.data.comments ? [] : dataPacket.data.comments;
+            
+            // await db.collection('cx-news-articles').doc(article_id).update({
+            //     comments: dataPacket.data.comments.push(result.id)
+            // })
+        } else {
+            console.error('TODO')
+        }
     },
 
     /**
@@ -154,6 +145,15 @@ module.exports = {
         });
         return;
     },
+    
+    async getNicknameFromCommentId(commentId) {
+        const comment = await db.collection('cx-news-comments').doc(commentId).get();
+        const userId = comment.data[0].user_id
+        const {nickname} = await getUserInfo(userId);
+        console.log('gzx getNicknameFromCommentId: ' + nickname)
+        return nickname;
+    }
+    
 }
 
 async function getUserInfo(userId) {
@@ -175,21 +175,26 @@ async function getComments(articleId) {
     let comments = dataPacket.data;
 
     comments = await Promise.all(comments.map(async (comment) => {
+        comment.authorInfo = await getUserInfo(comment.user_id);
+        return comment;
+    }));
+
+    comments = await Promise.all(comments.map(async (comment) => {
         let commentReply = await db.collection('cx-news-comments').where({
             article_id: articleId,
             comment_type: 1,
             reply_comment_id: comment._id
         }).get();
-        comment.reply = commentReply.data;
-        return comment;
-    }));
 
-    const newComments = await Promise.all(comments.map(async (comment) => {
-        comment.authorInfo = await getUserInfo(comment.user_id);
+        comment.replys = commentReply.data;
+        comment.replys = await Promise.all(comment.replys.map(async (comment) => {
+            comment.authorInfo = await getUserInfo(comment.user_id);
+            return comment;
+        }));
         return comment;
     }));
-    console.log('gzx getComments: ' + JSON.stringify(newComments));
-    return newComments;
+    console.log('gzx getComments: ' + JSON.stringify(comments));
+    return comments;
 }
 
 async function formatCommentReturn(comment) {
