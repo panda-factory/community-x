@@ -1,12 +1,5 @@
 {
     "pages": [{
-        "path": "pages/community-list/community-list",
-        "style": {
-            "navigationBarTitleText": "省份",
-            "enablePullDownRefresh": false
-        }
-
-    },{
         "path": "pages/tab-bar/forum/forum",
         "style": {
             "navigationBarTitleText": "邻居说",
@@ -45,6 +38,13 @@
             "navigationBarTitleText": "uni-app"
         }
     }, {
+        "path": "pages/community-list/community-list",
+        "style": {
+            "navigationBarTitleText": "省份",
+            "enablePullDownRefresh": false
+        }
+
+    },{
         "path": "pages/tab-bar/forum/detail/detail",
         "style": {
             "navigationBarTitleText": "",
