@@ -106,7 +106,7 @@
             },
             publish: function() {
                 uni.navigateTo({
-                    url: '/pages/tab-bar/post/post',
+                    url: '/pages/post/post',
                     complete(e) {
                         console.log('gzx complete')
                     },

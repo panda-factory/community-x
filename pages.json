@@ -137,7 +137,7 @@
             "navigationBarTitleText": "实名认证"
         }
     }, {
-        "path": "pages/tab-bar/post/post",
+        "path": "pages/post/post",
         "style": {
             "navigationBarTitleText": "",
             "enablePullDownRefresh": false
