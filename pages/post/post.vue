@@ -1,6 +1,7 @@
 <template>
     <view class="cx-container">
         <uni-notice-bar show-icon scrollable text="提醒：请勿发布广告、涉政、涉黄、涉暴以及侵犯他人合法权益的言论。共同遵守社区文明公约，讨论事情对事不对人，不欢迎人身攻击。" />
+        <uni-data-select v-model="categoryId" :localdata="categories" :clear="false"></uni-data-select>
 
         <view class="text-content">
             <uni-easyinput v-model="title" :inputBorder="false" placeholder="填写标题"
@@ -57,7 +58,14 @@
                     cloudPath: ''
                 },
                 placeholderStyle: "font-weight: bold;font-size:20px",
-
+                categories: [{
+                    text: '邻居动态',
+                    value: '646b7cbd09e2989198acf527'
+                }, {
+                    text: '失物招领',
+                    value: '-1'
+                }],
+                categoryId: '646b7cbd09e2989198acf527'
             }
         },
         onShow() {
@@ -69,42 +77,24 @@
             },
             async submit() {
                 const db = uniCloud.database();
-                
+
                 let thumbs = [];
                 await this.$refs.selectedFiles.upload();
                 this.imageUrls.forEach(element => {
                     thumbs.push(element.fileID);
                 })
-                
+
                 db.collection('cx-news-articles').add({
                     title: this.title,
                     content: this.content,
-                    thumbs: thumbs
-				}).then((res) => {
-					// res 为数据库查询结果
-					console.log('submit res: ' + JSON.stringify(res))
-				}).catch((err) => {
-					console.error(err.message)
-				});
-                // let data = {
-                //     userId: this.userInfo._id,
-                //     title: this.title,
-                //     imageUrls: [],
-                //     dateTime: getFormattedDate(),
-                // };
-
-
-                // await this.$refs.selectedFiles.upload();
-
-                // console.log('gzx submit 2: ' + this.imageUrls.length)
-                // console.log('gzx submit 3: ' + JSON.stringify(this.imageUrls))
-                // this.imageUrls.forEach(element => {
-                //     data.imageUrls.push(element.fileID);
-                // })
-
-                // console.log('gzx submit data: ' + JSON.stringify(data))
-                // let result = await cloudPost.submit(data);
-                // console.log('gzx submit result: ' + JSON.stringify(result))
+                    thumbs: thumbs,
+                    category_id: this.categoryId
+                }).then((res) => {
+                    // res 为数据库查询结果
+                    console.log('submit res: ' + JSON.stringify(res))
+                }).catch((err) => {
+                    console.error(err.message)
+                });
             }
         }
     }

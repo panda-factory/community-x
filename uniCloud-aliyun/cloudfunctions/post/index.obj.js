@@ -77,8 +77,8 @@ module.exports = {
      * @param {string} param1 参数1描述
      * @returns {object} 返回值描述
      */
-    async getTop() {
-        let dataPacket = await db.collection('cx-news-articles').limit(10).get();
+    async getDevelopmentsTop() {
+        let dataPacket = await db.collection('cx-news-articles').where({category_id: '646b7cbd09e2989198acf527'}).limit(10).get();
         let articleList = dataPacket.data;
 
         let authorInfoList = await Promise.all(articleList.map(async (article) => {

@@ -122,7 +122,7 @@
                 });
             },
             getNews() {
-                cloudPost.getTop().then(packet => {
+                cloudPost.getDevelopmentsTop().then(packet => {
                     this.articleList = packet;
                     this.articleList.forEach(item => {
                         item.publish_date = getFormattedDate(item.publish_date);
