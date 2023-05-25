@@ -27,7 +27,7 @@
 			"bsonType": "string",
 			"title": "分类",
 			"description": "分类 id，参考`uni-news-categories`表",
-			"foreignKey": "opendb-news-categories._id",
+			"foreignKey": "cx-news-categories._id",
 			"enum": {
 				"collection": "cx-news-categories",
 				"field": "name as text, _id as value"

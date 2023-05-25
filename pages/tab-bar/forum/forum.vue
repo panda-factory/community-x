@@ -118,7 +118,7 @@
             goDetail: function(id) {
                 console.log('gzx goDetail')
                 uni.navigateTo({
-                    url: './detail/detail?data=' + encodeURIComponent(id)
+                    url: '/pages/detail/detail?data=' + encodeURIComponent(id)
                 });
             },
             getNews() {

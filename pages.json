@@ -45,7 +45,7 @@
         }
 
     },{
-        "path": "pages/tab-bar/forum/detail/detail",
+        "path": "pages/detail/detail",
         "style": {
             "navigationBarTitleText": "",
             "enablePullDownRefresh": false
