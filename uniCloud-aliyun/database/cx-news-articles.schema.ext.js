@@ -9,8 +9,8 @@ module.exports = {
             docId,
             addDataList
         } = {}) {
-            console.log('gzx trigger afterCreate: ' + collection + ', operation: ' + operation)
-            console.log('gzx trigger afterCreate addDataList: ' + JSON.stringify(addDataList))
+            console.log('gzx trigger beforeCreate: ' + collection + ', operation: ' + operation)
+            console.log('gzx trigger beforeCreate addDataList: ' + JSON.stringify(addDataList))
             addDataList.forEach((article) => {
                 article.publish_date = getFormattedDate(article.publish_date);
                 article.last_modify_date = getFormattedDate(article.last_modify_date);

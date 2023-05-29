@@ -76,14 +76,16 @@
 			"description": "阅读数量",
 			"permission": {
 				"write": false
-			}
+			},
+			"defaultValue": 0
 		},
 		"like_count": {
 			"bsonType": "int",
 			"description": "喜欢数、点赞数",
 			"permission": {
 				"write": false
-			}
+			},
+			"defaultValue": 0
 		},
 		"is_sticky": {
 			"bsonType": "bool",
@@ -121,7 +123,8 @@
 			"description": "评论数量",
 			"permission": {
 				"write": false
-			}
+			},
+			"defaultValue": 0
 		},
 		"comments": {
 			"bsonType": "array",

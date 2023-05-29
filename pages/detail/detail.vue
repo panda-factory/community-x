@@ -81,7 +81,7 @@
 
 <script>
     import commentList from '@/pages/tab-bar/forum/components/comment/comment-list.vue'
-    import cxAvatar from '@/components/avatar/avatar.vue'
+    import cxAvatar from '@/components/cx-avatar/cx-avatar.vue'
     import userInfoMixin from '@/common/mixin/user-info.js'
     let cloudPost = uniCloud.importObject('post');
     export default {

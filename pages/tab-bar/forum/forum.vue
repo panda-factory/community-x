@@ -16,6 +16,7 @@
         </scroll-view>
 
 
+
         <swiper class="swiper-box" :current="tabIndex" @change="onTabChange">
             <swiper-item class="swiper-item" style="height:100vh;" v-for="(tab,index1) in category" :key="index1">
                 <scroll-view class="scroll-v" scroll-y>
@@ -41,7 +42,7 @@
                                     </view>
                                     <view class="card-actions-item" @click="actionsClick('评论')">
                                         <uni-icons type="chatbubble" size="18" color="#999"></uni-icons>
-                                        <text class="card-actions-item-text">评论</text>
+                                        <text class="card-actions-item-text">{{article.comment_count}}</text>
                                     </view>
                                 </view>
                             </template>
@@ -58,7 +59,7 @@
     import {
         getFormattedDate
     } from 'common/js/date';
-    import cxAvatar from '@/components/avatar/avatar.vue';
+    import cxAvatar from '@/components/cx-avatar/cx-avatar.vue';
 
     let cloudPost = uniCloud.importObject('post');
 

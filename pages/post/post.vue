@@ -94,7 +94,9 @@
                     console.log('submit res: ' + JSON.stringify(res))
                 }).catch((err) => {
                     console.error(err.message)
-                });
+                }).finally(() => {
+                    uni.navigateBack();
+                })
             }
         }
     }
