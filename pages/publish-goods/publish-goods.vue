@@ -28,7 +28,7 @@
 
         <uni-easyinput type="textarea" placeholder="详细描述"></uni-easyinput>
 
-        <uni-file-picker :auto-upload="false" limit="9" mode="grid"></uni-file-picker>
+        <uni-file-picker v-model="imageUrls" ref="selectedFiles" :auto-upload="false" limit="9" mode="grid"></uni-file-picker>
 
         <view class="bottom-bt">
             <button type="primary" style="width: 60%;" @click="submit">发布帖子</button>
@@ -37,27 +37,30 @@
 </template>
 
 <script>
+    let cloudMall = uniCloud.importObject('mall');
     export default {
         data() {
             return {
-
+                imageUrls: [],
+                itemDesc: ''
             };
         },
         methods: {
             async submit() {
                 const db = uniCloud.database();
 
-                let thumbs = [];
+                let bannerImgs = [];
                 await this.$refs.selectedFiles.upload();
                 this.imageUrls.forEach(element => {
-                    thumbs.push(element.fileID);
+                    bannerImgs.push(element.fileID);
                 })
 
-                db.collection('cx-news-articles').add({
-                    title: this.title,
-                    content: this.content,
-                    thumbs: thumbs,
-                    category_id: this.categoryId
+                db.collection('cx-mall-items').add({
+                    name: '1',
+                    price: 10,
+                    items_desc: 'thumbs',
+                    items_thumb: bannerImgs[0],
+                    items_banner_imgs: bannerImgs
                 }).then((res) => {
                     // res 为数据库查询结果
                     console.log('submit res: ' + JSON.stringify(res))

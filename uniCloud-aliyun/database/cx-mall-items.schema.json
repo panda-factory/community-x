@@ -1,0 +1,92 @@
+{
+	"bsonType": "object",
+	"required": [
+		"name",
+		"price",
+		"items_desc",
+		"items_thumb",
+		"items_banner_imgs"
+	],
+	"permission": {
+		"read": "doc.is_on_sale == true",
+		"create": true,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（商品 ID），系统自动生成"
+		},
+		"category_id": {
+			"bsonType": "string",
+			"description": "分类 id，参考`opendb-mall-categories`表",
+			"foreignKey": "opendb-mall-categories._id"
+		},
+		"items_sn": {
+			"bsonType": "string",
+			"description": "商品的唯一货号",
+			"title": "货号",
+			"trim": "both"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "商品名称",
+			"title": "名称",
+			"trim": "both"
+		},
+		"price": {
+			"bsonType": "int",
+			"description": "价格，以分为单位，避免浮点计算的精度问题"
+		},
+		"keywords": {
+			"bsonType": "string",
+			"description": "商品关键字，为搜索引擎收录使用",
+			"title": "关键字",
+			"trim": "both"
+		},
+		"items_desc": {
+			"bsonType": "string",
+			"description": "商品详细描述",
+			"title": "详细描述",
+			"trim": "both"
+		},
+		"items_thumb": {
+			"bsonType": "string",
+			"description": "商品缩略图，用于在列表或搜索结果中预览显示",
+			"title": "缩略图地址",
+			"pattern": "^(http://|https://|/|./|@/)\\S",
+			"trim": "both"
+		},
+		"items_banner_imgs": {
+			"bsonType": "array",
+			"description": "商品详情页的banner图地址"
+		},
+		"comment_count": {
+			"bsonType": "int",
+			"description": "累计评论数"
+		},
+		"add_date": {
+			"bsonType": "timestamp",
+			"description": "上架时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"last_modify_date": {
+			"bsonType": "timestamp",
+			"description": "最后修改时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"seller_note": {
+			"bsonType": "string",
+			"description": "商家备注，仅商家可见",
+			"trim": "both",
+			"permission": {
+				"read": false
+			}
+		}
+	},
+	"version": "0.0.1"
+}

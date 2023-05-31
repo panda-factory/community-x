@@ -1,0 +1,7 @@
+{
+  "name": "mall",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
