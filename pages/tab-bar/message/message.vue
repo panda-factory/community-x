@@ -1,6 +1,9 @@
 <template>
     <view class="container">
-
+        <view class="tabs">
+            <uni-icons class="tabbar-last" type="plus-filled" color="#007aff" size="30" @click="publish"></uni-icons>
+            <label>发闲置</label>
+        </view>
         <uni-search-bar @confirm="search" :focus="true" :placeholder="searchPlacehold" @blur="blur" @focus="focus"
             @input="input" @cancel="cancel" @clear="clear">
         </uni-search-bar>
@@ -76,7 +79,17 @@
             }
         },
         methods: {
-
+            publish: function() {
+                uni.navigateTo({
+                    url: '/pages/publish-goods/publish-goods',
+                    complete(e) {
+                        console.log('gzx complete')
+                    },
+                    fail(e) {
+                        console.log('gzx fail: ' + JSON.stringify(e))
+                    }
+                })
+            },
         }
     }
 </script>
@@ -84,6 +97,13 @@
 <style lang="scss">
     .container {
         overflow: hidden;
+
+        .tabs {
+            display: flex;
+            flex-direction: row-reverse;
+            /* 两端对齐 */
+            align-items: center;
+        }
 
         .tag-view {
             margin-right: 10px;

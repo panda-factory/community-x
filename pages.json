@@ -157,7 +157,16 @@
             "enablePullDownRefresh": false
         }
 
-    }],
+    }    ,{
+            "path" : "pages/publish-goods/publish-goods",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
     "globalStyle": {
         "navigationBarTextStyle": "black",
         "navigationBarTitleText": "uni-app",
